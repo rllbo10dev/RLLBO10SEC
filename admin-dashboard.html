@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — LGU Seminar Registrations</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-dark:  #0c447c;
+    --blue-mid:   #185fa5;
+    --blue-light: #e6f1fb;
+    --text-main:  #1a1a2e;
+    --text-sub:   #5a6070;
+    --text-hint:  #9aa0ad;
+    --bg:         #f0f4f9;
+    --surface:    #ffffff;
+    --border:     #dde1e9;
+    --radius:     8px;
+  }
+
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-main); }
+
+  /* ── Top Nav ── */
+  .nav {
+    background: var(--blue-dark);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 15px; font-weight: 500; }
+  .nav-brand i { font-size: 20px; opacity: 0.85; }
+  .nav-tag {
+    font-size: 11px;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+  /* ── Stat cards ── */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin-bottom: 1.75rem; }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+  }
+  .stat-card .label { font-size: 12px; color: var(--text-hint); margin-bottom: 4px; }
+  .stat-card .value { font-size: 26px; font-weight: 500; }
+  .stat-card.c-blue  .value { color: var(--blue-mid); }
+  .stat-card.c-green .value { color: #0f5132; }
+  .stat-card.c-amber .value { color: #856404; }
+  .stat-card.c-red   .value { color: #842029; }
+  .stat-card.c-navy  .value { color: #084298; }
+
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  .controls input[type="text"] {
+    height: 38px;
+    padding: 0 12px 0 36px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    outline: none;
+    min-width: 220px;
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239aa0ad' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 10px center;
+  }
+  .controls input:focus { border-color: var(--blue-mid); }
+  .controls select {
+    height: 38px;
+    padding: 0 32px 0 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%239aa0ad' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center;
+    appearance: none;
+    cursor: pointer;
+  }
+  .btn {
+    height: 38px;
+    padding: 0 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.12s;
+  }
+  .btn-primary { background: var(--blue-mid); color: #fff; border: none; }
+  .btn-primary:hover { background: var(--blue-dark); }
+  .btn-outline { background: var(--surface); color: var(--text-sub); border: 1px solid var(--border); }
+  .btn-outline:hover { background: var(--bg); }
+  .controls-right { margin-left: auto; display: flex; gap: 0.5rem; }
+
+  /* ── Table ── */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .table-wrap table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .table-wrap thead th {
+    background: #f8fafc;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-hint);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  .table-wrap thead th:hover { color: var(--text-sub); }
+  .table-wrap tbody tr { border-bottom: 1px solid #f1f3f7; transition: background 0.1s; }
+  .table-wrap tbody tr:last-child { border-bottom: none; }
+  .table-wrap tbody tr:hover { background: #f8fafc; }
+  .table-wrap tbody td { padding: 10px 14px; color: var(--text-main); vertical-align: middle; }
+
+  .status-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .status-Pending   { background: #fff3cd; color: #856404; }
+  .status-Confirmed { background: #d1e7dd; color: #0f5132; }
+  .status-Attended  { background: #cfe2ff; color: #084298; }
+  .status-Cancelled { background: #f8d7da; color: #842029; }
+  .status-NoShow    { background: #e2e3e5; color: #41464b; }
+
+  .status-select {
+    height: 30px;
+    padding: 0 28px 0 8px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    appearance: none;
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239aa0ad' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 6px center;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .remarks-input {
+    width: 100%;
+    min-width: 140px;
+    height: 30px;
+    padding: 0 8px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+    background: var(--surface);
+  }
+  .remarks-input:focus { border-color: var(--blue-mid); }
+
+  .empty-row td { text-align: center; padding: 3rem; color: var(--text-hint); font-size: 14px; }
+
+  /* ── Password screen ── */
+  .lock-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+  }
+  .lock-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+  }
+  .lock-icon {
+    width: 56px; height: 56px;
+    background: var(--blue-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.25rem;
+  }
+  .lock-icon i { font-size: 26px; color: var(--blue-mid); }
+  .lock-card h2 { font-size: 18px; margin-bottom: 0.4rem; }
+  .lock-card p  { font-size: 13px; color: var(--text-hint); margin-bottom: 1.25rem; }
+  .lock-card input {
+    width: 100%; height: 42px; padding: 0 12px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    outline: none; margin-bottom: 0.75rem; text-align: center; letter-spacing: 0.1em;
+  }
+  .lock-card input:focus { border-color: var(--blue-mid); }
+  .lock-error { font-size: 12px; color: #e24b4a; margin-bottom: 0.75rem; display: none; }
+  .lock-card .btn-primary { width: 100%; justify-content: center; height: 42px; font-size: 15px; }
+
+  .footnote { font-size: 12px; color: var(--text-hint); margin-top: 1.5rem; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ── Password Gate ─────────────────────────────────────────── -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-icon"><i class="ti ti-lock"></i></div>
+    <h2>Admin Access</h2>
+    <p>LGU Training Seminar · Region X</p>
+    <input type="password" id="pwdInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')checkPwd()">
+    <div class="lock-error" id="pwdError">Incorrect password. Please try again.</div>
+    <button class="btn btn-primary" onclick="checkPwd()"><i class="ti ti-login"></i> Sign in</button>
+  </div>
+</div>
+
+<!-- ── Dashboard ─────────────────────────────────────────────── -->
+<div id="dashboard" style="display:none">
+  <nav class="nav">
+    <div class="nav-brand">
+      <i class="ti ti-clipboard-list"></i>
+      LGU Seminar Registrations
+    </div>
+    <span class="nav-tag">Admin Dashboard</span>
+  </nav>
+
+  <div class="container">
+
+    <!-- Stats -->
+    <div class="stats" id="statsRow">
+      <div class="stat-card c-blue">  <div class="label">Total registered</div><div class="value" id="st-total">0</div></div>
+      <div class="stat-card c-green"> <div class="label">Confirmed</div>       <div class="value" id="st-confirmed">0</div></div>
+      <div class="stat-card c-navy">  <div class="label">Attended</div>        <div class="value" id="st-attended">0</div></div>
+      <div class="stat-card c-amber"> <div class="label">Pending</div>         <div class="value" id="st-pending">0</div></div>
+      <div class="stat-card c-red">   <div class="label">Cancelled</div>       <div class="value" id="st-cancelled">0</div></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <input type="text" id="searchBox" placeholder="Search name, LGU, invoice..." oninput="renderTable()">
+      <select id="filterStatus" onchange="renderTable()">
+        <option value="">All statuses</option>
+        <option>Pending</option>
+        <option>Confirmed</option>
+        <option>Attended</option>
+        <option>Cancelled</option>
+        <option>No Show</option>
+      </select>
+      <select id="filterProvince" onchange="renderTable()">
+        <option value="">All provinces</option>
+        <option>Bukidnon</option>
+        <option>Camiguin</option>
+        <option>Lanao del Norte</option>
+        <option>Misamis Occidental</option>
+        <option>Misamis Oriental</option>
+      </select>
+      <div class="controls-right">
+        <button class="btn btn-outline" onclick="loadFromSheet()"><i class="ti ti-refresh"></i> Refresh</button>
+        <button class="btn btn-primary" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortBy('timestamp')">#&nbsp;<i class="ti ti-arrows-sort" style="font-size:10px"></i></th>
+            <th onclick="sortBy('name')">Full name</th>
+            <th onclick="sortBy('designation')">Designation</th>
+            <th onclick="sortBy('province')">Province</th>
+            <th>City / Municipality</th>
+            <th>Barangay</th>
+            <th onclick="sortBy('invoice')">Invoice #</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th onclick="sortBy('timestamp')">Registered</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <p class="footnote">Changes to Status and Remarks are saved locally during this session. Use the Google Sheet directly for permanent edits.</p>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────
+//  ⚠️  CONFIGURATION — update both values before deploying
+// ─────────────────────────────────────────────────────────────────
+const SCRIPT_URL    = "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+const ADMIN_PASSWORD = "Admin2026!";   // Change this to your chosen password
+// ─────────────────────────────────────────────────────────────────
+
+let allData   = [];
+let sortKey   = 'timestamp';
+let sortAsc   = false;
+
+// ── Password gate ────────────────────────────────────────────
+function checkPwd() {
+  const pwd = document.getElementById('pwdInput').value;
+  if (pwd === ADMIN_PASSWORD) {
+    document.getElementById('lockScreen').style.display  = 'none';
+    document.getElementById('dashboard').style.display   = 'block';
+    loadFromSheet();
+  } else {
+    document.getElementById('pwdError').style.display = 'block';
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdInput').focus();
+  }
+}
+
+// ── Load data from Google Sheets ────────────────────────────
+async function loadFromSheet() {
+  // Demo data so the dashboard renders without a live sheet
+  // Replace this block with a real fetch from your Apps Script GET endpoint
+  // that returns the sheet data as JSON.
+  allData = [
+    { id:1, name:"Juan dela Cruz",     designation:"Mayor",          province:"Misamis Oriental", city:"Cagayan de Oro City", barangay:"Lapasan",       invoice:"INV-2026-001", status:"Confirmed", remarks:"",               timestamp:"2026-05-20T08:14:00Z" },
+    { id:2, name:"Maria Santos",       designation:"SB Member",      province:"Bukidnon",         city:"Malaybalay City",     barangay:"Casisang",       invoice:"INV-2026-002", status:"Pending",   remarks:"",               timestamp:"2026-05-21T09:30:00Z" },
+    { id:3, name:"Pedro Reyes",        designation:"DILG Officer",   province:"Lanao del Norte",  city:"Iligan City",         barangay:"Hinaplanon",     invoice:"INV-2026-003", status:"Attended",  remarks:"Checked in",     timestamp:"2026-05-21T10:05:00Z" },
+    { id:4, name:"Ana Lim",            designation:"City Treasurer",  province:"Misamis Occidental",city:"Ozamiz City",       barangay:"Cogon",          invoice:"INV-2026-004", status:"Confirmed", remarks:"",               timestamp:"2026-05-22T07:45:00Z" },
+    { id:5, name:"Roberto Garcia",     designation:"Barangay Captain",province:"Camiguin",         city:"Mambajao",           barangay:"Poblacion",      invoice:"INV-2026-005", status:"Cancelled", remarks:"Unable to attend",timestamp:"2026-05-22T11:20:00Z" },
+    { id:6, name:"Carla Fernandez",    designation:"HR Officer",      province:"Misamis Oriental", city:"Gingoog City",       barangay:"Poblacion",      invoice:"INV-2026-006", status:"Pending",   remarks:"",               timestamp:"2026-05-23T08:00:00Z" },
+    { id:7, name:"Jose Aquino",        designation:"Dept Head",       province:"Bukidnon",         city:"Valencia City",      barangay:"Sugod",          invoice:"INV-2026-007", status:"Confirmed", remarks:"",               timestamp:"2026-05-23T09:15:00Z" }
+  ];
+  updateStats();
+  renderTable();
+}
+
+// ── Stats ────────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('st-total').textContent     = allData.length;
+  document.getElementById('st-confirmed').textContent = allData.filter(r=>r.status==='Confirmed').length;
+  document.getElementById('st-attended').textContent  = allData.filter(r=>r.status==='Attended').length;
+  document.getElementById('st-pending').textContent   = allData.filter(r=>r.status==='Pending').length;
+  document.getElementById('st-cancelled').textContent = allData.filter(r=>r.status==='Cancelled').length;
+}
+
+// ── Sort ─────────────────────────────────────────────────────
+function sortBy(key) {
+  if (sortKey === key) sortAsc = !sortAsc;
+  else { sortKey = key; sortAsc = true; }
+  renderTable();
+}
+
+// ── Render table ─────────────────────────────────────────────
+function renderTable() {
+  const q    = document.getElementById('searchBox').value.toLowerCase();
+  const stat = document.getElementById('filterStatus').value;
+  const prov = document.getElementById('filterProvince').value;
+
+  let rows = allData.filter(r => {
+    const match = !q || [r.name,r.designation,r.province,r.city,r.barangay,r.invoice]
+                        .some(v => v.toLowerCase().includes(q));
+    const mStat = !stat || r.status === stat;
+    const mProv = !prov || r.province === prov;
+    return match && mStat && mProv;
+  });
+
+  rows.sort((a,b) => {
+    const av = a[sortKey] || ''; const bv = b[sortKey] || '';
+    return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+
+  const tbody = document.getElementById('tableBody');
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="10"><i class="ti ti-search-off" style="font-size:24px;display:block;margin:0 auto 8px"></i>No registrations found.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map((r, i) => {
+    const statusClass = 'status-' + r.status.replace(' ','');
+    const dt = new Date(r.timestamp);
+    const dtStr = dt.toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}) + ' ' +
+                  dt.toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
+    return `<tr>
+      <td style="color:var(--text-hint);font-size:12px">${i+1}</td>
+      <td style="font-weight:500">${r.name}</td>
+      <td style="color:var(--text-sub)">${r.designation}</td>
+      <td>${r.province}</td>
+      <td>${r.city}</td>
+      <td>${r.barangay}</td>
+      <td style="font-family:monospace;font-size:12px">${r.invoice}</td>
+      <td>
+        <select class="status-select" onchange="updateStatus(${r.id}, this.value)">
+          ${['Pending','Confirmed','Attended','Cancelled','No Show'].map(s =>
+            `<option${r.status===s?' selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td><input class="remarks-input" type="text" value="${r.remarks}" placeholder="Add note…"
+           onchange="updateRemarks(${r.id}, this.value)"></td>
+      <td style="color:var(--text-hint);font-size:12px;white-space:nowrap">${dtStr}</td>
+    </tr>`;
+  }).join('');
+}
+
+function updateStatus(id, val) {
+  const rec = allData.find(r => r.id === id);
+  if (rec) { rec.status = val; updateStats(); }
+}
+function updateRemarks(id, val) {
+  const rec = allData.find(r => r.id === id);
+  if (rec) rec.remarks = val;
+}
+
+// ── CSV export ───────────────────────────────────────────────
+function exportCSV() {
+  const headers = ["Timestamp","Full Name","Designation","Province","City/Municipality","Barangay","Invoice Number","Status","Remarks"];
+  const rows = allData.map(r => [
+    r.timestamp, r.name, r.designation, r.province, r.city, r.barangay, r.invoice, r.status, r.remarks
+  ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+
+  const csv  = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'LGU_Registrations_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
