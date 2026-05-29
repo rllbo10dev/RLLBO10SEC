@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LGU Training Seminar — Registration</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  /* ── STEP 1: Replace the URL below with your deployed Apps Script Web App URL ── */
+  /* ─────────────────────────────────────────────────────────────────────────────── */
+
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-dark:   #0c447c;
+    --blue-mid:    #185fa5;
+    --blue-light:  #e6f1fb;
+    --blue-border: #b5d4f4;
+    --text-main:   #1a1a2e;
+    --text-sub:    #5a6070;
+    --text-hint:   #9aa0ad;
+    --bg:          #f5f7fa;
+    --surface:     #ffffff;
+    --border:      #dde1e9;
+    --border-soft: #edf0f5;
+    --red:         #e24b4a;
+    --green-bg:    #d1e7dd;
+    --green-fg:    #0f5132;
+    --radius:      10px;
+    --radius-sm:   6px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 580px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(24,95,165,0.08);
+  }
+
+  /* Header */
+  .card-header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+    padding: 2rem 2rem 1.75rem;
+    text-align: center;
+  }
+  .seal {
+    width: 60px; height: 60px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+  .seal i { font-size: 28px; color: #fff; }
+  .card-header .region-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+  }
+  .card-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+  .card-header p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  /* Body */
+  .card-body { padding: 1.75rem 2rem 2rem; }
+
+  .required-note {
+    font-size: 12px;
+    color: var(--text-hint);
+    margin-bottom: 1.5rem;
+  }
+  .required-note span { color: var(--red); }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-hint);
+    margin: 1.5rem 0 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-soft);
+  }
+
+  .field { margin-bottom: 1rem; }
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-sub);
+    margin-bottom: 6px;
+  }
+  .field label .req { color: var(--red); margin-left: 2px; }
+
+  .field input,
+  .field select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-main);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa0ad' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--blue-mid);
+    box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
+  }
+  .field select:disabled {
+    background-color: #f8f9fc;
+    color: var(--text-hint);
+    cursor: not-allowed;
+  }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+  .hint {
+    font-size: 12px;
+    color: var(--text-hint);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .hint i { font-size: 13px; }
+
+  /* Validation */
+  .error-msg {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 4px;
+    display: none;
+    align-items: center;
+    gap: 4px;
+  }
+  .field.has-error input,
+  .field.has-error select { border-color: var(--red); }
+  .field.has-error .error-msg { display: flex; }
+
+  /* Submit button */
+  .btn-submit {
+    width: 100%;
+    height: 48px;
+    background: var(--blue-mid);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    margin-top: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-submit:hover { background: var(--blue-dark); }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled { background: var(--text-hint); cursor: not-allowed; }
+  .btn-submit .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  .btn-submit.loading .spinner { display: block; }
+  .btn-submit.loading .btn-label { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Error banner */
+  .error-banner {
+    display: none;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    font-size: 13px;
+    color: #856404;
+    align-items: center;
+    gap: 8px;
+  }
+  .error-banner.show { display: flex; }
+
+  /* Success state */
+  .success-section {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  .success-icon {
+    width: 72px; height: 72px;
+    background: var(--green-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+  }
+  .success-icon i { font-size: 34px; color: var(--green-fg); }
+  .success-section h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 20px;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+  }
+  .success-section p { font-size: 14px; color: var(--text-sub); line-height: 1.6; }
+  .success-section .ref {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 12px;
+    color: var(--text-hint);
+    background: var(--bg);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    font-family: monospace;
+  }
+
+  @media (max-width: 520px) {
+    .card-body { padding: 1.25rem 1.25rem 1.75rem; }
+    .row-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Registration type toggle ── */
+  .reg-type-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 0.25rem;
+  }
+  .reg-type-option { position: relative; }
+  .reg-type-option input[type="radio"] {
+    position: absolute; opacity: 0; width: 0; height: 0;
+  }
+  .reg-type-option label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-sub);
+    background: var(--surface);
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .reg-type-option label .rt-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    background: var(--bg);
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .reg-type-option label .rt-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-main);
+  }
+  .reg-type-option label .rt-text span {
+    font-size: 11px;
+    color: var(--text-hint);
+  }
+  .reg-type-option input:checked + label {
+    border-color: var(--blue-mid);
+    background: var(--blue-light);
+  }
+  .reg-type-option input:checked + label .rt-icon {
+    background: var(--blue-mid);
+    color: #fff;
+  }
+  .reg-type-option input:checked + label .rt-text strong {
+    color: var(--blue-mid);
+  }
+
+  /* On-site invoice placeholder box */
+  .onsite-notice {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: #f0f7ff;
+    border: 1px dashed var(--blue-border);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+  .onsite-notice i { font-size: 18px; color: var(--blue-mid); flex-shrink: 0; }
+  .onsite-notice.show { display: flex; }
+
+  /* ── LGU Level selector ── */
+  .lgu-level-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .lgu-level-option { position: relative; }
+  .lgu-level-option input[type="radio"] {
+    position: absolute; opacity: 0; width: 0; height: 0;
+  }
+  .lgu-level-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0.7rem 0.5rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: center;
+    background: var(--surface);
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+    min-height: 82px;
+  }
+  .lgu-level-option label .ll-icon {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    background: var(--bg);
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+  }
+  .lgu-level-option label .ll-name {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-main);
+    line-height: 1.2;
+  }
+  .lgu-level-option label .ll-desc {
+    font-size: 10px;
+    color: var(--text-hint);
+    line-height: 1.3;
+  }
+  .lgu-level-option input:checked + label {
+    border-color: var(--blue-mid);
+    background: var(--blue-light);
+  }
+  .lgu-level-option input:checked + label .ll-icon {
+    background: var(--blue-mid);
+    color: #fff;
+  }
+  .lgu-level-option input:checked + label .ll-name {
+    color: var(--blue-mid);
+  }
+
+  /* LGU dropdown rows — shown/hidden by level */
+  .lgu-fields { display: none; }
+  .lgu-fields.show { display: block; }
+  .lgu-fields .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+  @media (max-width: 420px) {
+    .lgu-level-group { grid-template-columns: 1fr 1fr 1fr; }
+    .lgu-level-option label { padding: 0.6rem 0.3rem; min-height: 76px; }
+    .lgu-level-option label .ll-name { font-size: 10.5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header">
+    <div class="seal"><i class="ti ti-building-community"></i></div>
+    <div class="region-badge">Regional League of Local Budget Officers-10, Inc.</div>
+    <h1>Training Seminar<br>Registration Form</h1>
+    <p>Local Government Units · Northern Mindanao</p>
+  </div>
+
+  <div class="card-body">
+    <div id="formSection">
+      <p class="required-note">Fields marked <span>*</span> are required.</p>
+      <p class="required-note"><strong>Data Privacy Notice and Participant Consent</strong><br>
+In compliance with the Philippines Data Privacy Act of 2012 (R.A. 10173), Regional League of Local Budget Officers-10, Inc. (RLLBO-10) is committed to protecting your personal data. [1, 2]
+Purpose of Collection: We collect data solely to manage your registration, process billing/payments, issue certificates of participation and attendance.</p>
+      <div class="section-label">Participant information</div>
+
+      <div class="field" id="f-name">
+        <label>Full name <span class="req">*</span></label>
+        <input type="text" id="fullName" placeholder="e.g. Juan dela Cruz" autocomplete="name">
+        <div class="error-msg"><i class="ti ti-alert-circle"></i> Please enter your full name.</div>
+      </div>
+
+      <div class="field" id="f-desig">
+        <label>Designation <span class="req">*</span></label>
+        <input type="text" id="designation" placeholder="e.g. Mayor, SB Member, Department Head">
+        <div class="error-msg"><i class="ti ti-alert-circle"></i> Please enter your designation.</div>
+      </div>
+
+      <div class="section-label">Affiliated LGU</div>
+
+      <!-- Step 1: LGU Level selector -->
+      <div class="field" id="f-lgulevel">
+        <label>LGU level <span class="req">*</span></label>
+        <div class="lgu-level-group">
+
+          <div class="lgu-level-option">
+            <input type="radio" name="lguLevel" id="ll-provincial" value="Provincial" onchange="onLguLevelChange()">
+            <label for="ll-provincial">
+              <div class="ll-icon"><i class="ti ti-map"></i></div>
+              <div class="ll-name">Provincial LGU</div>
+              
+            </label>
+          </div>
+
+          <div class="lgu-level-option">
+            <input type="radio" name="lguLevel" id="ll-citymun" value="City/Municipal" onchange="onLguLevelChange()">
+            <label for="ll-citymun">
+              <div class="ll-icon"><i class="ti ti-building-skyscraper"></i></div>
+              <div class="ll-name">City/Municipal LGU</div>
+              
+            </label>
+          </div>
+
+          <div class="lgu-level-option">
+            <input type="radio" name="lguLevel" id="ll-barangay" value="Barangay" onchange="onLguLevelChange()">
+            <label for="ll-barangay">
+              <div class="ll-icon"><i class="ti ti-home"></i></div>
+              <div class="ll-name">Barangay LGU</div>
+              
+            </label>
+          </div>
+
+        </div>
+        <div class="error-msg"><i class="ti ti-alert-circle"></i> Please select your LGU level.</div>
+      </div>
+
+      <!-- Province — shown for all levels once a level is chosen -->
+      <div class="lgu-fields" id="lgu-province-row">
+        <div class="field" id="f-province">
+          <label>Province <span class="req">*</span></label>
+          <select id="province">
+            <option value="">— Select province —</option>
+          </select>
+          <div class="error-msg"><i class="ti ti-alert-circle"></i> Please select a province.</div>
+        </div>
+      </div>
+
+      <!-- City/Municipality — shown for City/Municipal and Barangay levels -->
+      <div class="lgu-fields" id="lgu-citymun-row">
+        <div class="field" id="f-citymun">
+          <label>City / Municipality <span class="req">*</span></label>
+          <select id="citymun" disabled>
+            <option value="">— Select province first —</option>
+          </select>
+          <div class="error-msg"><i class="ti ti-alert-circle"></i> Please select a city/municipality.</div>
+        </div>
+      </div>
+
+      <!-- Barangay — shown for Barangay level only -->
+      <div class="lgu-fields" id="lgu-barangay-row">
+        <div class="field" id="f-barangay">
+          <label>Barangay <span class="req">*</span></label>
+          <select id="barangay" disabled>
+            <option value="">— Select city/municipality first —</option>
+          </select>
+          <div class="error-msg"><i class="ti ti-alert-circle"></i> Please select a barangay.</div>
+        </div>
+      </div>
+
+      <div class="section-label">Payment details</div>
+
+      <!-- Registration type selector -->
+      <div class="field" id="f-regtype">
+        <label>Registration type <span class="req">*</span></label>
+        <div class="reg-type-group">
+          <div class="reg-type-option">
+            <input type="radio" name="regType" id="rt-prereg" value="Pre-registered" onchange="onRegTypeChange()">
+            <label for="rt-prereg">
+              <div class="rt-icon"><i class="ti ti-calendar-check"></i></div>
+              <div class="rt-text">
+                <strong>Pre-registered</strong>
+                <span>Has invoice number</span>
+              </div>
+            </label>
+          </div>
+          <div class="reg-type-option">
+            <input type="radio" name="regType" id="rt-onsite" value="On-site" onchange="onRegTypeChange()">
+            <label for="rt-onsite">
+              <div class="rt-icon"><i class="ti ti-map-pin"></i></div>
+              <div class="rt-text">
+                <strong>On-site</strong>
+                <span>Walk-in registration</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="error-msg"><i class="ti ti-alert-circle"></i> Please select a registration type.</div>
+      </div>
+
+      <!-- Invoice number — shown for pre-registered only -->
+      <div class="field" id="f-invoice" style="display:none">
+        <label>Invoice number <span class="req">*</span></label>
+        <input type="text" id="invoiceNum" placeholder="e.g. INV-2026-00123" style="font-family:monospace;letter-spacing:0.04em">
+        <div class="hint"><i class="ti ti-info-circle"></i> As indicated in your official receipt or billing statement.</div>
+        <div class="error-msg"><i class="ti ti-alert-circle"></i> Please enter your invoice number.</div>
+      </div>
+
+      <!-- On-site notice — shown instead of invoice field -->
+      <div class="onsite-notice" id="onsiteNotice">
+        <i class="ti ti-info-circle"></i>
+        <div>Invoice number will be issued upon payment at the venue. Your registration will be recorded as <strong>On-site</strong>.</div>
+      </div>
+
+      <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
+        <div class="spinner"></div>
+        <span class="btn-label"><i class="ti ti-send"></i>&nbsp; Submit registration</span>
+      </button>
+
+      <div class="error-banner" id="errorBanner">
+        <i class="ti ti-alert-triangle"></i>
+        <span id="errorText">Something went wrong. Please try again.</span>
+      </div>
+    </div>
+
+    <div class="success-section" id="successSection">
+      <div class="success-icon"><i class="ti ti-circle-check"></i></div>
+      <h2>Registration submitted!</h2>
+      <p id="successMsg">Your registration has been recorded and is pending confirmation.</p>
+      <div class="ref" id="refCode"></div>
+      <p style="margin-top:1.25rem;font-size:12px;color:var(--text-hint)">You may close this window or scan the QR code again to register another participant.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────
+//  ⚠️  REPLACE THIS URL with your deployed Apps Script Web App URL
+//  (from: Deploy > Manage Deployments > copy "Web app" URL)
+// ─────────────────────────────────────────────────────────────────
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTO2vkOSbWrn_EqSxm3iuz7Dd2v1HxiX99y3dQOw43Q17Y4xNJoAquYIM_CeujOTDEGQ/exec";
+// ─────────────────────────────────────────────────────────────────
+
+const LGU_DATA = {
+  "Bukidnon": {
+    " Not Applicable":[" Not Appicable"],
+    "Malaybalay City": [" Not Appicable","Aglayan", "Apo Macote", "Bancas", "Bantuanon", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Barangay 6", "Barangay 7", "Barangay 8", "Barangay 9", "Barangay 10", "Barangay 11", "Busdi", "Cabangahan", "Caburacanan", "Can-ayan", "Capitan Angel", "Casisang", "Dalwangan", "Impalambong", "Indalasa", "Kalasungay", "Laguitas", "Linabo", "Magsaysay", "Maligaya", "Managok", "Manalu", "Mapayag", "Mapulo", "Migluka", "Patpat", "Saint Peter", "San Jose", "Sumpong", "Violeta", "Zamboanguita"],
+    "Valencia City": [" Not Appicable","Bagontaas", "Banlag", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Batangan", "Catumbalon", "Colonia", "Concepcion", "Dagatan", "Dakit", "Dologon", "Guinoyoran", "Kahaponan", "Laligan", "Lillingayon", "Lourdes", "Lumbayao", "Lumbo", "Mabag", "Maapag", "Mailag", "Mt. Nebo", "Nabago", "Newa", "Pagalungan", "Pinatilan", "Poblacion", "San Carlos", "San Isidro", "Sinabuagan", "Sinayawan", "Sugod", "Tongantongan", "Tugaya"],
+    "Baungon": [" Not Appicable","Balintad", "Buenavista", "Danatag", "Imbatug", "Kalilangan", "Lacasandig", "Langaon", "Liboran", "Lingating", "Mabuhay", "Mabunga", "Nicdao", "Pualas", "Salimbalan", "San Vicente", "Sinonoc"],
+    "Cabanglasan": [" Not Appicable","Cabanglasan Poblacion", "Cabulohan", "Capihan", "Dalacutan", "Freedom", "Iba", "Imbatug", "Jasaan", "Kinawe", "Manduñao", "Manguikhay", "Paradise", "Poblacion", "Sayaw", "Tugop"],
+    "Damulog": [" Not Appicable","Aludas", "Angga-an", "Batu-batu", "Kinapat", "Kiraon", "Kitingting", "Lagandang", "Macapari", "Maigo", "Migcawayan", "New Compostela", "Old Damulog", "Poblacion", "Poculan", "Sampagar", "San Isidro", "Tangculan"],
+    "Dangcagan": [" Not Appicable","Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Bugcaon", "Dolores", "Kapitan Bayong", "Kioki", "Magsaysay", "Malinao", "Miaray", "Osmeña", "Poblacion", "Rampas", "San Vicente"],
+    "Don Carlos": [" Not Appicable","Bocboc", "Buyot", "Cabadiangan", "Calaocalao", "Don Carlos Norte", "Don Carlos Sur", "Embayao", "Kalasayan", "Kiara", "Kibatang", "Mahayahay", "Maraymaray", "Mendoza", "New Nongnongan", "Pinamaloy", "Poblacion", "San Antonio", "San Nicolas", "San Roque", "Sinangguyan", "Sinao", "Sual", "Tininglanan", "Upper Mentering"],
+    "Impasugong": [" Not Appicable","Bantuanon", "Bulonay", "Capitan Bayong", "Cawayan", "Dampaan", "Dumalaguing", "Guihean", "Hagpa", "Impasugong Poblacion", "Kalabugao", "La Fortuna", "Maluko", "Miarayon", "Poblacion", "Sayawan"],
+    "Kadingilan": [" Not Appicable","Bagongbayan", "Balaoro", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Cabadiangan", "Husayan", "Kibalagon", "Kibogtok", "Mabuhay", "Malinao", "Matampay", "Payacan", "Pinamula", "Poblacion", "Salvacion", "San Andres", "Sibonga"],
+    "Kalilangan": [" Not Appicable","Baborawon", "Bangcud", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Canituan", "Kibaritan", "Kinura", "Lampanusan", "Macatcatuit", "Malinao", "Pamotolon", "Poblacion", "Public", "San Vicente", "West Poblacion"],
+    "Kibawe": [" Not Appicable","Balintawak", "Cagawasan", "Centro", "Kiorao", "Kisawa", "Labuagon", "Magsaysay", "Marasbaras", "Mascariñas", "Natulongan", "New Kidapawan", "Old Kibawe", "Pinamula", "Poblacion", "Rampas", "Romagook", "Samoki", "Sanipon", "Spring", "Talahiron", "Tumaras", "West Kibawe"],
+    "Kitaotao": [" Not Appicable","Balangigay", "Balupit", "Binuangan", "Bolacao", "Cabadiangan", "Calapaton", "Digongan", "Kabalantian", "Kahaponan", "Kalabasuan", "Kapai", "Kiandis", "Kimanao", "Kitaotao Poblacion", "Kitaihon", "Kitavu", "Kiumad", "Laligan", "Metebong", "Miaray", "Panganan", "Poblacion", "San Isidro", "San Jose", "San Roque", "Sinuda", "Tandokol", "Waterfalls"],
+    "Lantapan": [" Not Appicable","Alanib", "Baclayon", "Balila", "Bantuanon", "Bugcaon", "Capitan Juan", "Cawayan", "Kulasihan", "Kibaritan", "Lantapan Poblacion", "Miarayon", "Poblacion", "Songco", "Victory"],
+    "Libona": [" Not Appicable","Capitan Bayong", "Crossing", "Gango", "Kiliog", "Latabon", "Libona Poblacion", "Maapag", "Mambuaya", "Mampayag", "Palabucan", "Poblacion", "Pualas", "San Jose", "Santa Fe"],
+    "Malitbog": [" Not Appicable","Kalingking", "Kiabo", "Mindagat", "Olayan", "Patpat Poblacion", "Poblacion", "Sampiano", "San Luis", "Silo-o", "Sumalag", "Santa Ines"],
+    "Manolo Fortich": [" Not Appicable","Agusan Canyon", "Alangilan", "Dalirig", "Damilag", "Dicklum", "Guilang-guilang", "Kalugmanan", "Kinasanghan", "Lindaban", "Lingion", "Lunocan", "Maluco", "Mampisan", "Mantilong", "Minsuro", "Mirus", "Poblacion", "San Miguel", "Sankanan", "Santiago", "Santo Niño", "Talaandig", "Ticala"],
+    "Maramag": [" Not Appicable","Anahawon", "Base Camp", "Bayabason", "Camp 1", "Colonia", "Dagumba-an", "Danggawan", "Kiuntod", "Kuya", "La Roxas", "Maramag Poblacion", "North Poblacion", "Panadtalan", "Pangantucan", "Poblacion", "San Andres", "San Miguel", "South Poblacion", "Tubigon", "Zamboanguita"],
+    "Pangantucan": [" Not Appicable","Adtuyon", "Bacusanon", "Bangcud", "Barangay 1", "Barangay 2", "Barangay 3", "Concepcion", "Kimanait", "Kinawe", "Langcataon", "Lilingayon", "Madaya", "Malinao", "Mandum", "Miaray", "New Eden", "Pangantucan Poblacion", "Pigtauranan", "Poblacion", "San Isidro"],
+    "Quezon": [" Not Appicable","Butong", "Cabaritan", "Cawasan", "Clavite", "Dumalama", "Kibaritan", "Kibuaya", "Kiokong", "Linabo", "Lipawan", "Magsaysay", "Mahayahay", "Manlamon", "Merangerang", "Miaray", "Minapan", "New Cebu", "Poblacion", "Pualas", "Salawagan", "San Isidro", "San Jose", "San Roque", "Santa Cruz", "Santa Filomena", "Sinuda", "Subang", "Ticala", "Zamboanguita"],
+    "San Fernando": [" Not Appicable","Bonacao", "Bulalang", "Cabuling", "Cayaga", "Dao", "Durian", "Halapitan", "Iglugsad", "Kibalabag", "Little Baguio", "Mabuhay", "Magkalungay", "Malaybalay", "Namnam", "Palacapao", "Poblacion", "Sacutan", "San Isidro", "San Jose", "Santo Domingo", "Tugop"],
+    "Sumilao": [" Not Appicable","Kisolon", "Kulasi", "Lilingayon", "Mampayag", "Poblacion", "Puntian", "San Jose", "San Vicente", "Sumilao Poblacion", "Vista Villa"],
+    "Talakag": [" Not Appicable","Aglayan", "Bacao", "Basak", "Baylanan", "Cacaon", "Colonia", "Cosina", "Dagundalahon", "Dominorog", "Indulang", "Jampason", "Kibaritan", "Kinayan", "Lantud", "Liguron", "Lingi-on", "Lirongan", "Miarayon", "Pangantucan", "Poblacion", "Salimbalan", "San Antonio", "San Isidro", "San Jose", "San Martin", "San Miguel", "San Vicente", "Santo Niño", "Tagbak", "Tikalaan"]
+  },
+  "Camiguin": {
+    " Not Applicable":[" Not Appicable"],
+    "Mambajao": [" Not Appicable","Agoho", "Anito", "Balbagon", "Baylao", "Benhaan", "Bug-ong", "Kuguita", "Magting", "Naasag", "Pandan", "Poblacion", "Soro-soro", "Tagdo", "Tupsan", "Yumbing"],
+    "Catarman": [" Not Appicable","Alga", "Bonbon", "Bura", "Catibac", "Compol", "Lawigan", "Liloan", "Looc", "Mainit", "Manduao", "Panghiawan", "Poblacion", "Santo Niño", "Tangaro"],
+    "Mahinog": [" Not Appicable","Benoni", "Binatubo", "Catohugan", "Hubangon", "Owakan", "Poblacion", "Puntod", "San Isidro", "San Jose", "San Miguel", "San Roque", "Tubod", "Tupsan Pequeño"],
+    "Sagay": [" Not Appicable","Alangilan", "Bacnit", "Balite", "Bonbon", "Bugang", "Cuna", "Manuyog", "Mayana", "Poblacion"],
+  "Guinsiliban": [" Not Appicable","Butay", "Cabuan", "Cantaan", "Liong", "Maac", "North Poblacion", "South Poblacion"]
+  },
+  "Lanao del Norte": {
+    " Not Applicable":[" Not Appicable"],
+    "Iligan City": [" Not Appicable","Abuno", "Acmac-Mariano Badelles Sr.", "Bagong Silang", "Bonbonon", "Bunawan", "Buru-un", "Dalipuga", "Del Carmen", "Digkilaan", "Ditucalan", "Dulag", "Hinaplanon", "Hindang", "Kabacsanan", "Kalilangan", "Kiwalan", "Lanipao", "Luinab", "Mahayahay", "Mainit", "Mandulog", "Maria Cristina", "Pala-o", "Panoroganan", "Poblacion", "Rogongon", "San Miguel", "San Roque", "Santa Elena", "Santa Filomena", "Santiago", "Santo Rosario", "Saray", "Suarez", "Tambacan", "Tibanga", "Tipanoy", "Tomas L. Cabili (Tominobo Proper)", "Tubod", "Ubaldo Laya", "Upper Hinaplanon", "Upper Tominobo", "Villa Verde"],
+    "Tubod": [" Not Appicable","Barakan", "Baroy", "Bual", "Bulod", "Camp 5", "Candis", "Caniogan", "Dalipe", "Kapatagan", "Kakao", "Kalilangan", "Lala", "Lamawan", "Licapao", "Linas", "Malingao", "Palao", "Patudan", "Pigcarangan", "Pinuyak", "Poblacion", "Pualas", "San Antonio", "Tangcal", "Tangueguiron", "Taporog"],
+    "Bacolod": [" Not Appicable","Alegria", "Bababaya", "Bacolod Poblacion", "Binuni", "Demologan", "Esperanza", "Kahayag", "Liangan East", "Mati", "Minaulon", "Pagayawan", "Punca", "Rupagan", "Samaron", "San Roque", "Sinulong"],
+    "Balo-i": [" Not Appicable","Abaga", "Angrak", "Balut", "Basagad", "Bigue", "Bualan", "Cadaunan", "Liloan", "Lumbac", "Mabas", "Madaya", "Maito Balut", "Mamaanon", "Nangka", "Pacalundo", "Pagalongan", "Pantaon", "Pantar", "Poblacion", "Poona Momungan", "Saray", "Sigayan", "Tangcal", "Zapang"],
+    "Baroy": [" Not Appicable","Andil", "Bagong Dawis", "Baroy Dacu", "Cabadbaran", "Carmel", "Dalama", "Gislib", "Kinasanghan", "Libertad", "Limonsudan", "Maliwanag", "Manan-ao", "Pakyawan", "Poblacion", "Raw-an", "Riverside", "Salong", "San Juan", "Sogod", "Upper Usugan", "Village"],
+    "Kapatagan": [" Not Appicable","Bacus", "Bel-is", "Buenavista", "Butadon", "Catumsan", "Curvada", "De Asis", "Donggwan", "Inudaran", "Kahayag", "Kidaman", "Lapinig", "Mahayahay", "Malinao", "Margos", "Maranding", "Poblacion", "Pulang Yuta", "San Isidro", "San Roque", "Santa Cruz", "Santo Niño", "Sapad", "Susung", "Taguibo", "Tiacongan", "Tulatulahan"],
+    "Kauswagan": [" Not Appicable","Bagong Silang", "Bait-ait", "Bara-ason", "Cayontor", "Delabayan", "Inudaran Poblacion", "Kawit Occidental", "Kawit Oriental", "Libertad", "Paiton", "Poblacion", "Tacub", "Tugar", "Upper Kawit"],
+    "Kolambugan": [" Not Appicable","Austin Heights", "Baybay", "Bubong", "Caromatan", "Inudaran", "Kulasihan", "Libertad", "Lumabao", "Manga", "Matampay", "Mukas", "Muntay", "Pangi", "Pantar", "Poblacion", "Rebucon", "Riverside", "San Jose", "Simbuco", "Tabigue", "Titunod"],
+    "Lala": [" Not Appicable","Abaga", "Andil", "Bariga", "Biangan", "Cabasi", "Culasian", "Darumawang Bucana", "Darumawang Ilaya", "El Salvador", "Gumagamot", "Lala Poblacion", "Lanipao", "Magpatao", "Malingao", "Matampay Bucana", "Matampay Ilaya", "Pacita", "Pendulonan", "Pinatubo", "Raw-an", "Rebe", "San Isidro Lower", "San Isidro Upper", "San Manuel", "Santa Cruz Lower", "Santa Cruz Upper", "Simpak", "Tuna-an"],
+    "Linamon": [" Not Appicable","Busque", "Larapan", "Magoong", "Napocon", "Poblacion", "Purakan", "Robocon", "Samburon"],
+    "Magsaysay": [" Not Appicable","Babag", "Bagong Dawis", "Bieles", "Caniogan", "Dalama", "Kinasanghan", "Lumbac", "Magsaysay Poblacion", "Maliwanag", "Olango", "Pangamutan", "Poblacion", "Ramon Magsaysay", "San Isidro", "Santo Niño", "Sumbac", "Tambo", "Tawinnan", "Tubaran"],
+    "Maigo": [" Not Appicable","Balagatasa", "Camp 1", "Claro M. Recto", "Inacio", "Kulasihan", "Labuay", "Liangan West", "Mahayahay", "Maigo Poblacion", "Manga", "Maliwanag", "Mentring", "Sigacad", "Tugas"],
+    "Matungao": [" Not Appicable","Bangco", "Batal", "Batangan", "Bubong Radapan", "Cadayonan", "Matungao Poblacion", "Pasayanon", "Pangi", "Puntod", "Radapan", "Santa Cruz", "Tagoranao"],
+    "Munai": [" Not Appicable","Bacayawan", "Balabac", "Balintad", "Cadayonan", "Dalama", "Karkum", "Limbubong", "Lininding", "Mabagcon", "Madaya", "Maganding", "Matampay", "Munai Poblacion", "North Cadayonan", "Pantao", "Pantaon", "Pangamutan", "Ramain", "Sandab", "Tamparan", "Taporog"],
+    "Nunungan": [" Not Appicable","Bangco", "Canibungan", "Kabatangan", "Kakapodan", "Katubuan", "Liangan", "Malaig", "Masibay", "Matampay", "Nunungan Poblacion", "Pantao", "Pantaon", "Pelingkingan", "Rebucon", "Songgod", "Taraka"],
+    "Pantao Ragat": [" Not Appicable","Aloon", "Banday", "Bobonga Pantao Ragat", "Bobonga Radapan", "Calawe", "Culapa", "Dimnatang", "Lantawan", "Lomboyan", "Madalum", "Matampay", "Maliwanag", "Pantao Marug", "Pantao Ragat Poblacion", "Poblacion East", "Tangcal"],
+    "Pantar": [" Not Appicable","Bangco", "Bowaya", "Cabasi", "Cadayonan", "Campong", "Dilausan", "Kalilangan", "Lumbacaingud", "Marantao", "Pantao Marug", "Pantar Poblacion", "Pantao Ragat", "Poona Punod", "Punod", "Sapad", "Tawanan"],
+    "Poona Piagapo": [" Not Appicable","Alogan", "Bagumbayan", "Bubong East", "Cadoniog", "Cadayonan", "Dinaig", "Lininding", "Lumbacaingud", "Madamba", "Madaya", "Maliwanag", "Nunungan", "Pantao Ranao", "Pined", "Poona Piagapo Poblacion", "Pendulonan", "Sapad", "Tangcal", "Timbangalan"],
+    "Salvador": [" Not Appicable","Baliw", "Bayanihan", "Bulong", "Calimodan", "Camp 3", "Curvada", "Inasagan", "Kilabos", "Mabatao", "Madaya", "Mindalano", "Pagayawan", "Pansor", "Patidon", "Poblacion", "Saumay", "Sudlon", "Tambac"],
+    "Sapad": [" Not Appicable","Baning", "Dansalan", "Gamal", "Inudaran Lower", "Inudaran Upper", "Karkum", "Mabagcon", "Mala Salug", "Maliwanag", "Pangi", "Poblacion", "Panoloon", "Punta", "Sapad Lower", "Sapad Upper"],
+    "Sultan Naga Dimaporo": [" Not Appicable","Bangco", "Bauyan", "Bualan", "Calibon", "Dablestan", "Ilian", "Kabayaran", "Karomatan", "Koreo", "Lanao", "Mabuhay", "Magpatao", "Mahayahay", "Maliwanag", "Mina", "Natangcopan", "Panggao", "Pikalawag", "Pikit", "Poblacion", "Ramain", "Rebucon", "Sigayan", "Suga-Bayee", "Tagoranao", "Tantaon", "Topocon"],
+    "Tagoloan": [" Not Appicable","Dalamas", "Dimayon", "Inasagan", "Kiazar", "Malimbato", "Maliwanag", "Panalawan", "Poona Piagapo", "Tagoloan Poblacion"],
+    "Tangcal": [" Not Appicable","Bayabao", "Beruar", "Big Banisilon", "Bubong", "Liningding", "Lumbac", "Maliwanag", "Meligo", "Pangi", "Penas", "Poblacion", "Poona Karkum", "Small Banisilon", "Somiorang", "Tangcal Proper"]
+  },
+  "Misamis Occidental": {
+    " Not Applicable":[" Not Appicable"],
+    "Oroquieta City": [" Not Appicable", "Apil", "Binuangan", "Bolibol", "Buenavista", "Bunga", "Buntawan", "Burgos", "Canubay", "Clarin Settlement", "Dolipos Alto", "Dolipos Bajo", "Dulapo", "Dullan Norte", "Dullan Sur", "Lower Lamac", "Lower Langcangan", "Lower Loboc", "Lower Rizal", "Layawan", "Malindang", "Mialen", "Mobod", "Ciriaco C. Pastrano", "Paypayan", "Pines", "Poblacion I", "Poblacion II", "Proper Langcangan", "San Vicente Alto", "San Vicente Bajo", "Sebucal", "Senote", "Taboc Norte", "Taboc Sur", "Talairon", "Talic", "Toliyok", "Tipan", "Tuyabang Alto", "Tuyabang Bajo", "Tuyabang Proper", "Upper Lamac", "Upper Langcangan", "Upper Loboc", "Upper Rizal", "Victoria", "Villaflor"],
+    "Ozamiz City": [" Not Appicable", "Aguada", "Bacolod", "Bagakay", "Balintawak", "Bañadero", "Baybay San Roque", "Baybay Santa Cruz", "Baybay Triunfo", "Bongbong", "Calabayan", "Capucao C.", "Capucao P.", "Carangan", "Carmen Annex", "Catadman-Manabay", "Cavinte", "Cogon", "Dalapang", "Diguan", "Dimaluna", "Doña Consuelo", "Embargo", "Gala", "Gango", "Gotokan Daku", "Gotokan Diot", "Guimad", "Guingona", "Kinuman Norte", "Kinuman Sur", "Labinay", "Labo", "Lam-an", "Liposong", "Litapan", "Malaubang", "Manaka", "Maningcol", "Mentering", "Molicay", "Pantaon", "Pulot", "San Antonio", "Sangay Daku", "Sangay Diot", "Sinuza", "Stimson Abordo", "Tabid", "Tinago", "Trigos"],
+    "Tangub City": [" Not Appicable", "Balatacan", "Baluk", "Banglay", "Barangay I", "Barangay II", "Barangay III", "Barangay IV", "Barangay V", "Barangay VI", "Barangay VII", "Bintana", "Bocator", "Bongabong", "Caniangan", "Capalaran", "Catagan", "Garang", "Guinabot", "Guinalaban", "Hoyohoy", "Isidro D. Tan", "Kauswagan", "Kimat", "Labuyo", "Lorenzo Tan", "Lumban", "Maloro", "Manga", "Mantic", "Maquilao", "Marcos", "Matugnao", "Migcanaway", "Minsubong", "Owayan", "Paiton", "Panalsalan", "Pangabuan", "Prenza", "Salimpuno", "San Antonio", "San Apolinario", "San Vicente", "Santa Cruz", "Santa Maria", "Santo Niño", "Sicot", "Silanga", "Silangit", "Simasay", "Sumirap", "Taguite", "Tituron", "Tugas", "Villaba"],
+    "Aloran": [" Not Appicable", "Balintawak", "Banakon", "Bintana", "Caputol", "Casone", "Conat", "Culpan", "Dalisay", "De la Paz", "Deacon Erechar", "Dullan", "Ibabao", "Labo", "Lawa-an", "Lobogon", "Lumbayao", "Makawa", "Manamong", "Matipaz", "Maunong", "Mitazan", "Mahayahay", "Pelong", "Poblacion", "Roxas", "San Juan", "Shina", "Sinampongan", "Taguanao", "Talisayan", "Tuburan", "Zamora"],
+    "Baliangao": [" Not Appicable", "Del Pilar", "Landing", "Lumipon", "Mabini", "Magsaysay", "Misom", "Nato", "Palilan", "Poblacion", "Punta Miray", "San Isidro", "Sinian", "Sulong", "Tugas", "Tunggo"],
+    "Bonifacio": [" Not Appicable", "Bagumbang", "Baybay", "Bolinsong", "Buenavista", "Buracan", "Calolot", "Demetrio Fernan", "Digson", "Dimalco", "Dullan", "Kanaokanao", "Liloan", "Linconan", "Lodiong", "Lower Usugan", "Mapurog", "Migpange", "Montol", "Pisa-an", "Poblacion", "Remedios", "Rufino Lumapas", "Sibuyon", "Tangab", "Tiaman", "Tusik", "Upper Usogan"],
+    "Calamba": [" Not Appicable", "Bonifacio", "Bunawan", "Calaran", "Dapacan Alto", "Dapacan Bajo", "Don Bernardo Nery Poblacion", "Langub", "Libertad", "Magcamiguing", "Mamalad", "Mauswagon", "Northern Poblacion", "Salvador", "San Isidro", "Siloy", "Singalat", "Solinog", "Southwestern Poblacion", "Sulipat"],
+    "Clarin": [" Not Appicable", "Bernad", "Bito-on", "Cabunga-an", "Canibungan Daku", "Canibungan Putol", "Canipacan", "Dalingap", "Dela Paz", "Dolores", "Gata Daku", "Gata Diot", "Guba", "Kinangay Norte", "Kinangay Sur", "Lapasan", "Lupagan", "Malibangcao", "Masabud", "Mialen", "Poblacion I", "Poblacion II", "Poblacion III", "Poblacion IV", "Rizal", "San Pedro", "Sebasi", "Tinacalan", "Tuno"],
+    "Concepcion": [" Not Appicable", "Bagong Clarin", "Capule", "Deboloc", "Diosyo", "Lingatongan", "Litalit", "Maligubaan", "Mantukang", "Maramara", "Mauswagon", "Poblacion", "Pangonayan", "Pogot", "Small Potallon", "Sinuza", "Talaon", "Tumanong"],
+    "Don Victoriano": [" Not Appicable", "Bagong Clarin", "Gandawan", "Lake Duminagat", "Lalud", "Lampasan", "Libuac", "Mansawan", "Napangan", "Nueva Vista", "Petianan", "Tuno"],
+    "Jimenez": [" Not Appicable", "Adia", "Asalan", "Bongabong", "Butuay", "Carmen", "Corrales", "Dicoloc", "Gata", "Guibuangan", "Libaong", "Luzaran", "Mabas", "Macabayao", "Matugas Alto", "Matugas Bajo", "Mialem", "Nacional", "Palilan", "Pangabuan", "Poblacion", "Rizal", "San Roque", "Santa Cruz", "Sibuka", "Tabo-o", "Taraka"],
+    "Lopez Jaena": [" Not Appicable", "Alegria", "Bagong Silang", "Biasong", "Bonifacio", "Burgos", "Dalapang", "Dampalan", "Don Andres Soriano", "Eastern Poblacion", "Galat", "Katipunan", "Kauswagan", "Macalibre Alto", "Macalibre Bajo", "Mahayahay", "Malatubog", "Mansabay Bajo", "Molatuhan Alto", "Molatuhan Bajo", "Munque", "Puntod", "Rizal", "Sibugon", "Sibula", "Silo-on", "Western Poblacion", "Zorilla"],
+    "Panaon": [" Not Appicable", "Baga", "Bangko", "Camanucan", "Lutao", "Magsaysay", "Mapisí", "Poblacion", "Punod", "San Juan", "Sumasap", "Villalin"],
+    "Plaridel": [" Not Appicable", "Agunod", "Bato", "Buenavista", "Calacaan", "Cartagenas", "Casusan", "Catarman", "Cebulin", "Clarin", "Dana-an", "Debusan", "Divisoria", "Eastern Poblacion", "Gusa", "Ilisan", "Kalgasan", "Katipunan", "Kauswagan", "Lao", "Lipolo", "Lugo", "Mamanga Daku", "Mamanga Diot", "Mangidkid", "New Look", "Northern Poblacion", "Panalsalan", "Puntod", "Quirino", "Santa Cruz", "Southern Poblacion", "Spina", "Tipolo", "Western Poblacion"],
+    "Sapang Dalaga": [" Not Appicable", "Bautista", "Bitibut", "Boundary", "Caluya", "Capundag", "Casul", "Dalisay", "Disoy", "El Paraiso", "Guinabot", "Langa-g", "Libertad", "Liloan", "Linas", "Loging", "Maaslob", "Macabibo", "Manla", "Medallo", "Poblacion", "Salimpuno", "San Juan", "Sinaad", "Sipac", "Tiwi", "Ventura", "Vergara", "Villaflor"],
+    "Sinacaban": [" Not Appicable", "Cagayanon", "Camanucan", "Colupan Alto", "Colupan Bajo", "Dinomayan", "Gonzaga", "Katipunan", "Macabayao", "Matunog", "Poblacion", "San Isidro Alto", "San Isidro Bajo", "San Vicente", "Señorita", "Sinonoc", "Tipan"],
+    "Tudela": [" Not Appicable", "Balicaocao", "Basirang", "Bongabong", "Buenavista", "Cabol-anon", "Cahayag", "Camaling", "Canibungan Proper", "Centro Julip", "Centro Napisís", "Centro Poblacion", "Gala", "Ganta", "Locso-on", "Los Angeles", "Maquilao", "Maribojoc", "Mitaza", "Nailon", "Namut", "San Agustin", "San Isidro", "San Juan", "San Nicolas", "San Pedro", "Sebasí", "Sicot", "Silongon", "Sinuza", "Taguima", "Tigdok", "Yahong"]
+  },
+  "Misamis Oriental": {
+    " Not Applicable":[" Not Appicable"],
+    "Cagayan de Oro City": [" Not Applicable","Agusan","Balubal","Balulang","Baikingon","Bayabas","Bayanga","Besigan","Bonbon","Bugo","Bulua","Camaman-an","Carmen","Consolacion","Cugman","Dansolihon","F.S. Catanico","Gusa","Indahag","Iponan","Kauswagan","Lapasan","Lumbia","Macabalan","Macasandig","Mambuaya","Pagalungan","Pagatpatan","Patas","Pigsag-an","Puerto","Puntod","San Simon","Tablon","Taglimao","Tagpangi","Tignapoloan","Tuburan","Tumpagon","Urduja","Wao","Barangay 1","Barangay 2","Barangay 3","Barangay 4","Barangay 5","Barangay 6","Barangay 7","Barangay 8","Barangay 9","Barangay 10","Barangay 11","Barangay 12","Barangay 13","Barangay 14","Barangay 15","Barangay 16","Barangay 17","Barangay 18","Barangay 19","Barangay 20","Barangay 21","Barangay 22","Barangay 23","Barangay 24","Barangay 25","Barangay 26","Barangay 27","Barangay 28","Barangay 29","Barangay 30","Barangay 31","Barangay 32","Barangay 33","Barangay 34","Barangay 35","Barangay 36","Barangay 37","Barangay 38","Barangay 39","Barangay 40"],
+    "Gingoog City": [" Not Applicable","Agay-ayan", "Alagatan", "Anakan", "Bagubad", "Bakidbakid", "Bal-ason", "Bantaawan", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Barangay 6", "Barangay 7", "Barangay 8", "Barangay 9", "Barangay 10", "Barangay 11", "Barangay 12", "Barangay 13", "Barangay 14", "Barangay 15", "Barangay 16", "Barangay 17", "Barangay 18", "Barangay 18-A", "Barangay 19", "Barangay 20", "Barangay 21", "Barangay 22", "Barangay 22-A", "Barangay 23", "Barangay 24", "Barangay 24-A", "Barangay 25", "Binakalan", "Blas", "Buenavista", "Calipay", "Camaman-an", "Capitulangan", "Daan-Lungsod", "Don E. de la Paz", "Erechar", "Felicidad", "Gumaod", "Hindangon", "Kalagonoy", "Kibisi", "Kibanban", "Kitonod", "Kiwalan", "Libertad", "Libon", "Lunca", "Lurugan", "Magsaysay", "Malibud", "Malinao", "Maribucao", "Mimbuntong", "Mimbaloto", "Odiongan", "Pangás", "Punong", "Ricordon", "Samay", "San Jose", "San Juan", "San Miguel", "Sangalan", "Santiago", "Siaris", "Sinao", "Tinulongan", "Tonga", "Tinaytayan", "Talisay", "Utlanan"],
+    "El Salvador City": [" Not Applicable","Amoros","Bolisong","Bolobolo","Calongonan","Cogon","Himaya","Hinigdaan","Kalabaylabay", "Kibonbon","Molugan","Poblacion","Sambulawan","Sinaloc","Taytay","Ulaliman"],
+    "Alubijid": [" Not Applicable","Baybay", "Benigwayan", "Calatcat", "Casinglot", "Lanao", "Loguilo", "Lourdes", "Lumbo", "Molocboloc", "Poblacion", "Sampatulog", "Sungay", "Taboc", "Tapadarak", "Tula", "Tugas"],
+    "Balingasag": [" Not Applicable","Balagnan", "Balingasag", "Biwangan", "Blanco", "Calawag", "Camuayan", "Cogon", "Dansuli", "Duka", "Hermano", "Kibanban", "Linabu", "Linggangao", "Mambayaan", "Mandangoa", "Napaliran", "Plaridel", "Poblacion", "Quezon", "Rosario", "Samay", "San Francisco", "San Isidro", "San Juan", "Talusan", "Waterfall", "Talacogon", "Sulu", "Misamis"],
+    "Balingoan": [" Not Applicable","Baukbauk", "Dahilig", "Kabangasan", "Kabulakan", "Kauswagan", "Lapinig", "Mantangale", "Mapua", "San Alonzo"],
+    "Binuangan": [" Not Applicable","Dampias", "Kitamban", "Kitambis", "Mabini", "Mosangot", "Nabataan", "Poblacion", "Valdeconcha"],
+    "Claveria": [" Not Applicable","Ani-e", "Aposkahoy", "Bulahan", "Cabacungan", "Gumaod", "Hinaplanan", "Kalawitan", "Lanise", "Luna", "Madaguing", "Malagana", "Mat-i", "Minalwang", "Pambugas", "Panampawan", "Patrocenio", "Pelaez", "Plaridel", "Poblacion", "Punong", "Rizal", "Santa Cruz", "Tamboboan", "Tipolohon"],
+    "Gitagum": [" Not Applicable","Burnay", "Carlos P. Garcia", "Cogon", "Gregorio Pelaez", "Kilogmag", "Matangad", "Pangayawan", "Poblacion", "Quezon", "Tala-o", "Pangaba"],
+    "Initao": [" Not Applicable","Aluna", "Andales", "Apas", "Calacapan", "Gimangpang", "Kamelon", "Kanitoan", "Kauswagan", "Laguimban", "Liloan", "Pagahan", "Poblacion", "Pontacon", "San Pedro", "Sinalac", "Tawantawan"],
+    "Jasaan": [" Not Applicable","Aplaya", "Bobontugan", "Corrales", "Danao", "East Poblacion", "Jasaan Nuevo", "Kimaya", "La Libertad", "Luz Banzon", "Moog", "Natubo", "San Antonio", "San Isidro", "San Nicolas", "Solana", "Upper Jasaan", "West Poblacion"],
+    "Kinoguitan": [" Not Applicable","Buko", "Calubo", "Campo", "Esperanza", "Panabol", "Poblacion", "Salicapawan", "Saloso", "Suarez", "Sumalag", "Talisayan", "Zubiri"],
+    "Lagonglong": [" Not Applicable","Banglay", "Dampil", "Kabulawan", "Manaol", "Poblacion", "Tabok", "Umagood", "Gaston", "Salubsob", "Kauswagan"],
+    "Laguindingan": [" Not Applicable","Aroma", "Gasi", "Kibaghot", "Lapad", "Liberty", "Mauswagon", "Moog", "Poblacion", "Sambawan", "Sinait", "Tubajon"],
+    "Libertad": [" Not Applicable","Gimaylan", "Kimalok", "Lubluban", "Poblacion", "Retablo", "San Roque", "Tangkang", "Taytayan", "Dulapo"],
+    "Lugait": [" Not Applicable","Aya-aya", "Betahon", "Biga", "Calangahan", "Kalabaylabay", "Poblacion", "Lower Logistics", "Upper Logistics"],
+    "Magsaysay": [" Not Applicable","Abunda", "Artadi", "Bonifacio Aquiño", "Cabalawan", "Cabantian", "Cabubuhan", "Candiis", "Consuelo", "Damayuhan", "Gumabon", "Katipunan", "Kauswagan", "Kibungsod", "Mahayahay", "Mindulao", "Pag-asa", "Poblacion", "San Isidro", "San Vicente", "Santa Cruz", "Tama", "Tibon-tibon", "Tinaan", "Tulang", "Villa Felipa"],
+    "Manticao": [" Not Applicable","Argayoso", "Balacanas", "Cabanyungan", "Camanga", "Digkilaan", "Mahayahay", "Mambaya", "Paddogan", "Poblacion", "Punta Silum", "Tuod", "Upper Malubog"],
+    "Medina": [" Not Applicable","Bangbang", "Biga", "Bulwa", "Cabug", "Diguan", "Don Victoriano", "Gov. Jandusay", "Mananum Baguio", "Mananum Daan", "Mauswagon", "Mina-on", "Poblacion", "San Isidro", "San Jose", "San Roque", "San Vicente", "Tup-on", "Ulab"],
+    "Naawan": [" Not Applicable","Don Andres Narra", "Linangkayan", "Lubilan", "Maputi", "Matangad", "Patag", "Poblacion", "San Isidro", "Tagbalogo", "Tuboran"],
+    "Opol": [" Not Applicable","Awang", "Barra", "Bonbon", "Cauyunan", "Igpit", "Limonda", "Luyong Bonbon", "Malugan", "Nangcaon", "Patag", "Poblacion", "Taboc", "Tingalan", "Tuod"],
+    "Salay": [" Not Applicable","Alipuaton", "Ampenican", "Bunal", "Casulog", "Dinagsaan", "Guinalaban", "Ili-ilihon", "Inobulan", "Looc", "Matangad", "Poblacion", "Salay River I", "Salay River II", "Saray", "Tingkarol"],
+    "Sugbongcogon": [" Not Applicable","Alicomohan", "Amphi", "Kaulayanan", "Kidampas", "Manga", "Mimarlo", "Poblacion", "Poo", "Silad", "Tuod"],
+    "Tagoloan": [" Not Applicable","Baluarte", "Casinglot", "Gracia", "Mohon", "Natumolan", "Poblacion", "Rosario", "Santa Ana", "Santa Cruz", "Sugbongcogon"],
+    "Talisayan": [" Not Applicable","Babano", "Bugdang", "Calamcam", "Casaniangan", "Mandahilag", "Pangdan", "Poblacion", "Pook", "Punta Santiago", "Putallo", "San Jose", "Santa Ines", "Sibantang", "Sindangan", "Sipaco"],
+    "Villanueva": [" Not Applicable","Balacanas", "Dayawan", "Katipunan", "Kimaya", "Looc", "Poblacion", "San Martin", "Tambobong", "Tambongon"]
+  }
+};
+
+
+// ── Populate & cascade dropdowns ────────────────────────────
+const provSel  = document.getElementById('province');
+const citySel  = document.getElementById('citymun');
+const brgySel  = document.getElementById('barangay');
+
+Object.keys(LGU_DATA).sort().forEach(p => {
+  const o = document.createElement('option');
+  o.value = p; o.textContent = p;
+  provSel.appendChild(o);
+});
+
+provSel.addEventListener('change', () => {
+  citySel.innerHTML = '<option value="">— Select city/municipality —</option>';
+  brgySel.innerHTML = '<option value="">— Select city/municipality first —</option>';
+  citySel.disabled = true; brgySel.disabled = true;
+  if (LGU_DATA[provSel.value]) {
+    Object.keys(LGU_DATA[provSel.value]).sort().forEach(c => {
+      if (c.trim() === 'Not Applicable') return; // skip placeholder key
+      const o = document.createElement('option'); o.value = c; o.textContent = c;
+      citySel.appendChild(o);
+    });
+    citySel.disabled = false;
+  }
+  clearErr('f-province');
+});
+
+citySel.addEventListener('change', () => {
+  brgySel.innerHTML = '<option value="">— Select barangay —</option>';
+  brgySel.disabled = true;
+  const cities = LGU_DATA[provSel.value];
+  if (citySel.value && cities && cities[citySel.value]) {
+    cities[citySel.value].slice().sort().forEach(b => {
+      if (b.trim().toLowerCase().startsWith('not app')) return; // skip placeholder
+      const o = document.createElement('option'); o.value = b; o.textContent = b;
+      brgySel.appendChild(o);
+    });
+    brgySel.disabled = false;
+  }
+  clearErr('f-citymun');
+});
+
+brgySel.addEventListener('change', () => clearErr('f-barangay'));
+document.getElementById('fullName').addEventListener('input',    () => clearErr('f-name'));
+document.getElementById('designation').addEventListener('input', () => clearErr('f-desig'));
+document.getElementById('invoiceNum').addEventListener('input',  () => clearErr('f-invoice'));
+
+// ── LGU Level selector ───────────────────────────────────────
+function onLguLevelChange() {
+  const level = document.querySelector('input[name="lguLevel"]:checked');
+  if (!level) return;
+
+  clearErr('f-lgulevel');
+
+  const provRow  = document.getElementById('lgu-province-row');
+  const cityRow  = document.getElementById('lgu-citymun-row');
+  const brgyRow  = document.getElementById('lgu-barangay-row');
+
+  // Reset all downstream selects when level changes
+  provSel.value = '';
+  citySel.innerHTML = '<option value="">— Select province first —</option>';
+  citySel.disabled = true;
+  brgySel.innerHTML = '<option value="">— Select city/municipality first —</option>';
+  brgySel.disabled = true;
+  clearErr('f-province'); clearErr('f-citymun'); clearErr('f-barangay');
+
+  if (level.value === 'Provincial') {
+    provRow.classList.add('show');
+    cityRow.classList.remove('show');
+    brgyRow.classList.remove('show');
+  } else if (level.value === 'City/Municipal') {
+    provRow.classList.add('show');
+    cityRow.classList.add('show');
+    brgyRow.classList.remove('show');
+  } else if (level.value === 'Barangay') {
+    provRow.classList.add('show');
+    cityRow.classList.add('show');
+    brgyRow.classList.add('show');
+  }
+}
+
+// ── Registration type toggle ─────────────────────────────────
+function onRegTypeChange() {
+  const selected     = document.querySelector('input[name="regType"]:checked');
+  const invoiceField = document.getElementById('f-invoice');
+  const onsiteNotice = document.getElementById('onsiteNotice');
+  const invoiceInput = document.getElementById('invoiceNum');
+
+  clearErr('f-regtype');
+  if (!selected) return;
+
+  if (selected.value === 'Pre-registered') {
+    invoiceField.style.display = 'block';
+    onsiteNotice.classList.remove('show');
+    invoiceInput.required = true;
+  } else {
+    invoiceField.style.display = 'none';
+    onsiteNotice.classList.add('show');
+    invoiceInput.value    = '';
+    invoiceInput.required = false;
+    clearErr('f-invoice');
+  }
+}
+
+// ── Validation ───────────────────────────────────────────────
+function clearErr(id) { document.getElementById(id).classList.remove('has-error'); }
+
+function validate() {
+  let ok = true;
+
+  // Name & designation
+  [['f-name','fullName'],['f-desig','designation']].forEach(([fid, iid]) => {
+    const val = document.getElementById(iid).value.trim();
+    if (!val) { document.getElementById(fid).classList.add('has-error'); ok = false; }
+    else       { document.getElementById(fid).classList.remove('has-error'); }
+  });
+
+  // LGU level required
+  const lguLevel = document.querySelector('input[name="lguLevel"]:checked');
+  if (!lguLevel) {
+    document.getElementById('f-lgulevel').classList.add('has-error');
+    ok = false;
+  } else {
+    document.getElementById('f-lgulevel').classList.remove('has-error');
+
+    // Province always required once a level is picked
+    if (!provSel.value.trim()) {
+      document.getElementById('f-province').classList.add('has-error'); ok = false;
+    } else {
+      document.getElementById('f-province').classList.remove('has-error');
+    }
+
+    // City/Mun required for City/Municipal and Barangay levels
+    if (lguLevel.value === 'City/Municipal' || lguLevel.value === 'Barangay') {
+      if (!citySel.value.trim()) {
+        document.getElementById('f-citymun').classList.add('has-error'); ok = false;
+      } else {
+        document.getElementById('f-citymun').classList.remove('has-error');
+      }
+    }
+
+    // Barangay required only for Barangay level
+    if (lguLevel.value === 'Barangay') {
+      if (!brgySel.value.trim()) {
+        document.getElementById('f-barangay').classList.add('has-error'); ok = false;
+      } else {
+        document.getElementById('f-barangay').classList.remove('has-error');
+      }
+    }
+  }
+
+  // Registration type required
+  const regType = document.querySelector('input[name="regType"]:checked');
+  if (!regType) {
+    document.getElementById('f-regtype').classList.add('has-error'); ok = false;
+  } else {
+    document.getElementById('f-regtype').classList.remove('has-error');
+    if (regType.value === 'Pre-registered') {
+      const inv = document.getElementById('invoiceNum').value.trim();
+      if (!inv) { document.getElementById('f-invoice').classList.add('has-error'); ok = false; }
+      else       { document.getElementById('f-invoice').classList.remove('has-error'); }
+    }
+  }
+
+  return ok;
+}
+
+// ── Submit ───────────────────────────────────────────────────
+async function handleSubmit() {
+  if (!validate()) return;
+
+  const btn    = document.getElementById('submitBtn');
+  const banner = document.getElementById('errorBanner');
+  banner.classList.remove('show');
+  btn.disabled = true;
+  btn.classList.add('loading');
+
+  const lguLevel = document.querySelector('input[name="lguLevel"]:checked').value;
+  const regType  = document.querySelector('input[name="regType"]:checked').value;
+  const invoice  = regType === 'Pre-registered'
+    ? document.getElementById('invoiceNum').value.trim()
+    : 'ON-SITE';
+
+  // Build location string based on level chosen
+  const province = provSel.value;
+  const city     = (lguLevel === 'City/Municipal' || lguLevel === 'Barangay') ? citySel.value : '';
+  const barangay = lguLevel === 'Barangay' ? brgySel.value : '';
+
+  // Human-readable LGU affiliation for success message
+  const lguLabel = lguLevel === 'Provincial'
+    ? province
+    : lguLevel === 'City/Municipal'
+      ? `${city}, ${province}`
+      : `${barangay}, ${city}, ${province}`;
+
+  const payload = {
+    name:        document.getElementById('fullName').value.trim(),
+    designation: document.getElementById('designation').value.trim(),
+    lguLevel:    lguLevel,
+    province:    province,
+    city:        city     || '—',
+    barangay:    barangay || '—',
+    regType:     regType,
+    invoice:     invoice
+  };
+
+  try {
+    const res  = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+    const data = await res.json();
+
+    if (data.success) {
+      document.getElementById('successMsg').textContent =
+        `Thank you, ${payload.name}. Your ${regType.toLowerCase()} registration for ${lguLabel} has been recorded and is pending confirmation.`;
+      document.getElementById('refCode').textContent = 'Transaction No: ' + (data.transaction || '—');
+      document.getElementById('formSection').style.display    = 'none';
+      document.getElementById('successSection').style.display = 'block';
+    } else {
+      throw new Error(data.message || 'Submission failed.');
+    }
+  } catch (err) {
+    document.getElementById('errorText').textContent =
+      'Could not submit your registration. Please check your connection and try again. (' + err.message + ')';
+    banner.classList.add('show');
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+}
+</script>
+</body>
+</html>
