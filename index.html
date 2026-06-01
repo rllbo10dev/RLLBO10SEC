@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGU Training Seminar — Registration</title>
+<title>RLLBO-10, Inc. Training Seminar — Registration</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-  /* ── STEP 1: Replace the URL below with your deployed Apps Script Web App URL ── */
-  /* ─────────────────────────────────────────────────────────────────────────────── */
-
   @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -222,6 +219,9 @@
   }
   .btn-submit.loading .spinner { display: block; }
   .btn-submit.loading .btn-label { display: none; }
+  .field.hidden { display: none; }
+  #invoiceNum { font-family: monospace; letter-spacing: 0.04em; }
+
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* Error banner */
@@ -430,7 +430,7 @@
       <img src="my-icon.png" alt="Community Icon" width="72" height="72">
     </div>
     <div class="region-badge">Regional League of Local Budget Officers-10, Inc.</div>
-    <h1>Training Seminar<br>Registration Form</h1>
+    <h1>TRAINING SEMINAR<br>Registration Form</h1>
     <p>Local Government Units · Northern Mindanao</p>
   </div>
 
@@ -438,7 +438,7 @@
     <div id="formSection">
       <p class="required-note">Fields marked <span>*</span> are required.</p>
       <p class="required-note"><strong>Data Privacy Notice and Participant Consent</strong><br>
-In compliance with the Philippines Data Privacy Act of 2012 (R.A. 10173), Regional League of Local Budget Officers-10, Inc. (RLLBO-10) is committed to protecting your personal data. [1, 2]
+In compliance with the Philippines Data Privacy Act of 2012 (R.A. 10173), Regional League of Local Budget Officers-10, Inc. (RLLBO-10) is committed to protecting your personal data.
 Purpose of Collection: We collect data solely to manage your registration, process billing/payments, issue certificates of participation and attendance.</p>
       <div class="section-label">Participant information</div>
 
@@ -466,7 +466,6 @@ Purpose of Collection: We collect data solely to manage your registration, proce
             <label for="ll-provincial">
               <div class="ll-icon"><i class="ti ti-map"></i></div>
               <div class="ll-name">Provincial LGU</div>
-              
             </label>
           </div>
 
@@ -475,7 +474,6 @@ Purpose of Collection: We collect data solely to manage your registration, proce
             <label for="ll-citymun">
               <div class="ll-icon"><i class="ti ti-building-skyscraper"></i></div>
               <div class="ll-name">City/Municipal LGU</div>
-              
             </label>
           </div>
 
@@ -484,7 +482,6 @@ Purpose of Collection: We collect data solely to manage your registration, proce
             <label for="ll-barangay">
               <div class="ll-icon"><i class="ti ti-home"></i></div>
               <div class="ll-name">Barangay LGU</div>
-              
             </label>
           </div>
 
@@ -556,9 +553,9 @@ Purpose of Collection: We collect data solely to manage your registration, proce
       </div>
 
       <!-- Invoice number — shown for pre-registered only -->
-      <div class="field" id="f-invoice" style="display:none">
+      <div class="field hidden" id="f-invoice">
         <label>Invoice number <span class="req">*</span></label>
-        <input type="text" id="invoiceNum" placeholder="e.g. INV-2026-00123" style="font-family:monospace;letter-spacing:0.04em">
+        <input type="text" id="invoiceNum" placeholder="e.g. INV-2026-00123">
         <div class="hint"><i class="ti ti-info-circle"></i> As indicated in your official receipt or billing statement.</div>
         <div class="error-msg"><i class="ti ti-alert-circle"></i> Please enter your invoice number.</div>
       </div>
@@ -569,7 +566,7 @@ Purpose of Collection: We collect data solely to manage your registration, proce
         <div>Invoice number will be issued upon payment at the venue. Your registration will be recorded as <strong>On-site</strong>.</div>
       </div>
 
-      <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
+      <button type="button" class="btn-submit" id="submitBtn" onclick="handleSubmit()">
         <div class="spinner"></div>
         <span class="btn-label"><i class="ti ti-send"></i>&nbsp; Submit registration</span>
       </button>
@@ -600,112 +597,107 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTO2vkOSbWrn_EqSxm3
 
 const LGU_DATA = {
   "Bukidnon": {
-    " Not Applicable":[" Not Appicable"],
-    "Malaybalay City": [" Not Appicable","Aglayan", "Apo Macote", "Bancas", "Bantuanon", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Barangay 6", "Barangay 7", "Barangay 8", "Barangay 9", "Barangay 10", "Barangay 11", "Busdi", "Cabangahan", "Caburacanan", "Can-ayan", "Capitan Angel", "Casisang", "Dalwangan", "Impalambong", "Indalasa", "Kalasungay", "Laguitas", "Linabo", "Magsaysay", "Maligaya", "Managok", "Manalu", "Mapayag", "Mapulo", "Migluka", "Patpat", "Saint Peter", "San Jose", "Sumpong", "Violeta", "Zamboanguita"],
-    "Valencia City": [" Not Appicable","Bagontaas", "Banlag", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Batangan", "Catumbalon", "Colonia", "Concepcion", "Dagatan", "Dakit", "Dologon", "Guinoyoran", "Kahaponan", "Laligan", "Lillingayon", "Lourdes", "Lumbayao", "Lumbo", "Mabag", "Maapag", "Mailag", "Mt. Nebo", "Nabago", "Newa", "Pagalungan", "Pinatilan", "Poblacion", "San Carlos", "San Isidro", "Sinabuagan", "Sinayawan", "Sugod", "Tongantongan", "Tugaya"],
-    "Baungon": [" Not Appicable","Balintad", "Buenavista", "Danatag", "Imbatug", "Kalilangan", "Lacasandig", "Langaon", "Liboran", "Lingating", "Mabuhay", "Mabunga", "Nicdao", "Pualas", "Salimbalan", "San Vicente", "Sinonoc"],
-    "Cabanglasan": [" Not Appicable","Cabanglasan Poblacion", "Cabulohan", "Capihan", "Dalacutan", "Freedom", "Iba", "Imbatug", "Jasaan", "Kinawe", "Manduñao", "Manguikhay", "Paradise", "Poblacion", "Sayaw", "Tugop"],
-    "Damulog": [" Not Appicable","Aludas", "Angga-an", "Batu-batu", "Kinapat", "Kiraon", "Kitingting", "Lagandang", "Macapari", "Maigo", "Migcawayan", "New Compostela", "Old Damulog", "Poblacion", "Poculan", "Sampagar", "San Isidro", "Tangculan"],
-    "Dangcagan": [" Not Appicable","Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Bugcaon", "Dolores", "Kapitan Bayong", "Kioki", "Magsaysay", "Malinao", "Miaray", "Osmeña", "Poblacion", "Rampas", "San Vicente"],
-    "Don Carlos": [" Not Appicable","Bocboc", "Buyot", "Cabadiangan", "Calaocalao", "Don Carlos Norte", "Don Carlos Sur", "Embayao", "Kalasayan", "Kiara", "Kibatang", "Mahayahay", "Maraymaray", "Mendoza", "New Nongnongan", "Pinamaloy", "Poblacion", "San Antonio", "San Nicolas", "San Roque", "Sinangguyan", "Sinao", "Sual", "Tininglanan", "Upper Mentering"],
-    "Impasugong": [" Not Appicable","Bantuanon", "Bulonay", "Capitan Bayong", "Cawayan", "Dampaan", "Dumalaguing", "Guihean", "Hagpa", "Impasugong Poblacion", "Kalabugao", "La Fortuna", "Maluko", "Miarayon", "Poblacion", "Sayawan"],
-    "Kadingilan": [" Not Appicable","Bagongbayan", "Balaoro", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Cabadiangan", "Husayan", "Kibalagon", "Kibogtok", "Mabuhay", "Malinao", "Matampay", "Payacan", "Pinamula", "Poblacion", "Salvacion", "San Andres", "Sibonga"],
-    "Kalilangan": [" Not Appicable","Baborawon", "Bangcud", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Canituan", "Kibaritan", "Kinura", "Lampanusan", "Macatcatuit", "Malinao", "Pamotolon", "Poblacion", "Public", "San Vicente", "West Poblacion"],
-    "Kibawe": [" Not Appicable","Balintawak", "Cagawasan", "Centro", "Kiorao", "Kisawa", "Labuagon", "Magsaysay", "Marasbaras", "Mascariñas", "Natulongan", "New Kidapawan", "Old Kibawe", "Pinamula", "Poblacion", "Rampas", "Romagook", "Samoki", "Sanipon", "Spring", "Talahiron", "Tumaras", "West Kibawe"],
-    "Kitaotao": [" Not Appicable","Balangigay", "Balupit", "Binuangan", "Bolacao", "Cabadiangan", "Calapaton", "Digongan", "Kabalantian", "Kahaponan", "Kalabasuan", "Kapai", "Kiandis", "Kimanao", "Kitaotao Poblacion", "Kitaihon", "Kitavu", "Kiumad", "Laligan", "Metebong", "Miaray", "Panganan", "Poblacion", "San Isidro", "San Jose", "San Roque", "Sinuda", "Tandokol", "Waterfalls"],
-    "Lantapan": [" Not Appicable","Alanib", "Baclayon", "Balila", "Bantuanon", "Bugcaon", "Capitan Juan", "Cawayan", "Kulasihan", "Kibaritan", "Lantapan Poblacion", "Miarayon", "Poblacion", "Songco", "Victory"],
-    "Libona": [" Not Appicable","Capitan Bayong", "Crossing", "Gango", "Kiliog", "Latabon", "Libona Poblacion", "Maapag", "Mambuaya", "Mampayag", "Palabucan", "Poblacion", "Pualas", "San Jose", "Santa Fe"],
-    "Malitbog": [" Not Appicable","Kalingking", "Kiabo", "Mindagat", "Olayan", "Patpat Poblacion", "Poblacion", "Sampiano", "San Luis", "Silo-o", "Sumalag", "Santa Ines"],
-    "Manolo Fortich": [" Not Appicable","Agusan Canyon", "Alangilan", "Dalirig", "Damilag", "Dicklum", "Guilang-guilang", "Kalugmanan", "Kinasanghan", "Lindaban", "Lingion", "Lunocan", "Maluco", "Mampisan", "Mantilong", "Minsuro", "Mirus", "Poblacion", "San Miguel", "Sankanan", "Santiago", "Santo Niño", "Talaandig", "Ticala"],
-    "Maramag": [" Not Appicable","Anahawon", "Base Camp", "Bayabason", "Camp 1", "Colonia", "Dagumba-an", "Danggawan", "Kiuntod", "Kuya", "La Roxas", "Maramag Poblacion", "North Poblacion", "Panadtalan", "Pangantucan", "Poblacion", "San Andres", "San Miguel", "South Poblacion", "Tubigon", "Zamboanguita"],
-    "Pangantucan": [" Not Appicable","Adtuyon", "Bacusanon", "Bangcud", "Barangay 1", "Barangay 2", "Barangay 3", "Concepcion", "Kimanait", "Kinawe", "Langcataon", "Lilingayon", "Madaya", "Malinao", "Mandum", "Miaray", "New Eden", "Pangantucan Poblacion", "Pigtauranan", "Poblacion", "San Isidro"],
-    "Quezon": [" Not Appicable","Butong", "Cabaritan", "Cawasan", "Clavite", "Dumalama", "Kibaritan", "Kibuaya", "Kiokong", "Linabo", "Lipawan", "Magsaysay", "Mahayahay", "Manlamon", "Merangerang", "Miaray", "Minapan", "New Cebu", "Poblacion", "Pualas", "Salawagan", "San Isidro", "San Jose", "San Roque", "Santa Cruz", "Santa Filomena", "Sinuda", "Subang", "Ticala", "Zamboanguita"],
-    "San Fernando": [" Not Appicable","Bonacao", "Bulalang", "Cabuling", "Cayaga", "Dao", "Durian", "Halapitan", "Iglugsad", "Kibalabag", "Little Baguio", "Mabuhay", "Magkalungay", "Malaybalay", "Namnam", "Palacapao", "Poblacion", "Sacutan", "San Isidro", "San Jose", "Santo Domingo", "Tugop"],
-    "Sumilao": [" Not Appicable","Kisolon", "Kulasi", "Lilingayon", "Mampayag", "Poblacion", "Puntian", "San Jose", "San Vicente", "Sumilao Poblacion", "Vista Villa"],
-    "Talakag": [" Not Appicable","Aglayan", "Bacao", "Basak", "Baylanan", "Cacaon", "Colonia", "Cosina", "Dagundalahon", "Dominorog", "Indulang", "Jampason", "Kibaritan", "Kinayan", "Lantud", "Liguron", "Lingi-on", "Lirongan", "Miarayon", "Pangantucan", "Poblacion", "Salimbalan", "San Antonio", "San Isidro", "San Jose", "San Martin", "San Miguel", "San Vicente", "Santo Niño", "Tagbak", "Tikalaan"]
+    "Malaybalay City": ["Aglayan", "Apo Macote", "Bancas", "Bantuanon", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Barangay 6", "Barangay 7", "Barangay 8", "Barangay 9", "Barangay 10", "Barangay 11", "Busdi", "Cabangahan", "Caburacanan", "Can-ayan", "Capitan Angel", "Casisang", "Dalwangan", "Impalambong", "Indalasa", "Kalasungay", "Laguitas", "Linabo", "Magsaysay", "Maligaya", "Managok", "Manalu", "Mapayag", "Mapulo", "Migluka", "Patpat", "Saint Peter", "San Jose", "Sumpong", "Violeta", "Zamboanguita"],
+    "Valencia City": ["Bagontaas", "Banlag", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Batangan", "Catumbalon", "Colonia", "Concepcion", "Dagatan", "Dakit", "Dologon", "Guinoyoran", "Kahaponan", "Laligan", "Lillingayon", "Lourdes", "Lumbayao", "Lumbo", "Mabag", "Maapag", "Mailag", "Mt. Nebo", "Nabago", "Newa", "Pagalungan", "Pinatilan", "Poblacion", "San Carlos", "San Isidro", "Sinabuagan", "Sinayawan", "Sugod", "Tongantongan", "Tugaya"],
+    "Baungon": ["Balintad", "Buenavista", "Danatag", "Imbatug", "Kalilangan", "Lacasandig", "Langaon", "Liboran", "Lingating", "Mabuhay", "Mabunga", "Nicdao", "Pualas", "Salimbalan", "San Vicente", "Sinonoc"],
+    "Cabanglasan": ["Cabanglasan Poblacion", "Cabulohan", "Capihan", "Dalacutan", "Freedom", "Iba", "Imbatug", "Jasaan", "Kinawe", "Manduñao", "Manguikhay", "Paradise", "Poblacion", "Sayaw", "Tugop"],
+    "Damulog": ["Aludas", "Angga-an", "Batu-batu", "Kinapat", "Kiraon", "Kitingting", "Lagandang", "Macapari", "Maigo", "Migcawayan", "New Compostela", "Old Damulog", "Poblacion", "Poculan", "Sampagar", "San Isidro", "Tangculan"],
+    "Dangcagan": ["Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Bugcaon", "Dolores", "Kapitan Bayong", "Kioki", "Magsaysay", "Malinao", "Miaray", "Osmeña", "Poblacion", "Rampas", "San Vicente"],
+    "Don Carlos": ["Bocboc", "Buyot", "Cabadiangan", "Calaocalao", "Don Carlos Norte", "Don Carlos Sur", "Embayao", "Kalasayan", "Kiara", "Kibatang", "Mahayahay", "Maraymaray", "Mendoza", "New Nongnongan", "Pinamaloy", "Poblacion", "San Antonio", "San Nicolas", "San Roque", "Sinangguyan", "Sinao", "Sual", "Tininglanan", "Upper Mentering"],
+    "Impasugong": ["Bantuanon", "Bulonay", "Capitan Bayong", "Cawayan", "Dampaan", "Dumalaguing", "Guihean", "Hagpa", "Impasugong Poblacion", "Kalabugao", "La Fortuna", "Maluko", "Miarayon", "Poblacion", "Sayawan"],
+    "Kadingilan": ["Bagongbayan", "Balaoro", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Cabadiangan", "Husayan", "Kibalagon", "Kibogtok", "Mabuhay", "Malinao", "Matampay", "Payacan", "Pinamula", "Poblacion", "Salvacion", "San Andres", "Sibonga"],
+    "Kalilangan": ["Baborawon", "Bangcud", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Canituan", "Kibaritan", "Kinura", "Lampanusan", "Macatcatuit", "Malinao", "Pamotolon", "Poblacion", "Public", "San Vicente", "West Poblacion"],
+    "Kibawe": ["Balintawak", "Cagawasan", "Centro", "Kiorao", "Kisawa", "Labuagon", "Magsaysay", "Marasbaras", "Mascariñas", "Natulongan", "New Kidapawan", "Old Kibawe", "Pinamula", "Poblacion", "Rampas", "Romagook", "Samoki", "Sanipon", "Spring", "Talahiron", "Tumaras", "West Kibawe"],
+    "Kitaotao": ["Balangigay", "Balupit", "Binuangan", "Bolacao", "Cabadiangan", "Calapaton", "Digongan", "Kabalantian", "Kahaponan", "Kalabasuan", "Kapai", "Kiandis", "Kimanao", "Kitaotao Poblacion", "Kitaihon", "Kitavu", "Kiumad", "Laligan", "Metebong", "Miaray", "Panganan", "Poblacion", "San Isidro", "San Jose", "San Roque", "Sinuda", "Tandokol", "Waterfalls"],
+    "Lantapan": ["Alanib", "Baclayon", "Balila", "Bantuanon", "Bugcaon", "Capitan Juan", "Cawayan", "Kulasihan", "Kibaritan", "Lantapan Poblacion", "Miarayon", "Poblacion", "Songco", "Victory"],
+    "Libona": ["Capitan Bayong", "Crossing", "Gango", "Kiliog", "Latabon", "Libona Poblacion", "Maapag", "Mambuaya", "Mampayag", "Palabucan", "Poblacion", "Pualas", "San Jose", "Santa Fe"],
+    "Malitbog": ["Kalingking", "Kiabo", "Mindagat", "Olayan", "Patpat Poblacion", "Poblacion", "Sampiano", "San Luis", "Silo-o", "Sumalag", "Santa Ines"],
+    "Manolo Fortich": ["Agusan Canyon", "Alangilan", "Dalirig", "Damilag", "Dicklum", "Guilang-guilang", "Kalugmanan", "Kinasanghan", "Lindaban", "Lingion", "Lunocan", "Maluco", "Mampisan", "Mantilong", "Minsuro", "Mirus", "Poblacion", "San Miguel", "Sankanan", "Santiago", "Santo Niño", "Talaandig", "Ticala"],
+    "Maramag": ["Anahawon", "Base Camp", "Bayabason", "Camp 1", "Colonia", "Dagumba-an", "Danggawan", "Kiuntod", "Kuya", "La Roxas", "Maramag Poblacion", "North Poblacion", "Panadtalan", "Pangantucan", "Poblacion", "San Andres", "San Miguel", "South Poblacion", "Tubigon", "Zamboanguita"],
+    "Pangantucan": ["Adtuyon", "Bacusanon", "Bangcud", "Barangay 1", "Barangay 2", "Barangay 3", "Concepcion", "Kimanait", "Kinawe", "Langcataon", "Lilingayon", "Madaya", "Malinao", "Mandum", "Miaray", "New Eden", "Pangantucan Poblacion", "Pigtauranan", "Poblacion", "San Isidro"],
+    "Quezon": ["Butong", "Cabaritan", "Cawasan", "Clavite", "Dumalama", "Kibaritan", "Kibuaya", "Kiokong", "Linabo", "Lipawan", "Magsaysay", "Mahayahay", "Manlamon", "Merangerang", "Miaray", "Minapan", "New Cebu", "Poblacion", "Pualas", "Salawagan", "San Isidro", "San Jose", "San Roque", "Santa Cruz", "Santa Filomena", "Sinuda", "Subang", "Ticala", "Zamboanguita"],
+    "San Fernando": ["Bonacao", "Bulalang", "Cabuling", "Cayaga", "Dao", "Durian", "Halapitan", "Iglugsad", "Kibalabag", "Little Baguio", "Mabuhay", "Magkalungay", "Malaybalay", "Namnam", "Palacapao", "Poblacion", "Sacutan", "San Isidro", "San Jose", "Santo Domingo", "Tugop"],
+    "Sumilao": ["Kisolon", "Kulasi", "Lilingayon", "Mampayag", "Poblacion", "Puntian", "San Jose", "San Vicente", "Sumilao Poblacion", "Vista Villa"],
+    "Talakag": ["Aglayan", "Bacao", "Basak", "Baylanan", "Cacaon", "Colonia", "Cosina", "Dagundalahon", "Dominorog", "Indulang", "Jampason", "Kibaritan", "Kinayan", "Lantud", "Liguron", "Lingi-on", "Lirongan", "Miarayon", "Pangantucan", "Poblacion", "Salimbalan", "San Antonio", "San Isidro", "San Jose", "San Martin", "San Miguel", "San Vicente", "Santo Niño", "Tagbak", "Tikalaan"]
   },
   "Camiguin": {
-    " Not Applicable":[" Not Appicable"],
-    "Mambajao": [" Not Appicable","Agoho", "Anito", "Balbagon", "Baylao", "Benhaan", "Bug-ong", "Kuguita", "Magting", "Naasag", "Pandan", "Poblacion", "Soro-soro", "Tagdo", "Tupsan", "Yumbing"],
-    "Catarman": [" Not Appicable","Alga", "Bonbon", "Bura", "Catibac", "Compol", "Lawigan", "Liloan", "Looc", "Mainit", "Manduao", "Panghiawan", "Poblacion", "Santo Niño", "Tangaro"],
-    "Mahinog": [" Not Appicable","Benoni", "Binatubo", "Catohugan", "Hubangon", "Owakan", "Poblacion", "Puntod", "San Isidro", "San Jose", "San Miguel", "San Roque", "Tubod", "Tupsan Pequeño"],
-    "Sagay": [" Not Appicable","Alangilan", "Bacnit", "Balite", "Bonbon", "Bugang", "Cuna", "Manuyog", "Mayana", "Poblacion"],
-  "Guinsiliban": [" Not Appicable","Butay", "Cabuan", "Cantaan", "Liong", "Maac", "North Poblacion", "South Poblacion"]
+    "Mambajao": ["Agoho", "Anito", "Balbagon", "Baylao", "Benhaan", "Bug-ong", "Kuguita", "Magting", "Naasag", "Pandan", "Poblacion", "Soro-soro", "Tagdo", "Tupsan", "Yumbing"],
+    "Catarman": ["Alga", "Bonbon", "Bura", "Catibac", "Compol", "Lawigan", "Liloan", "Looc", "Mainit", "Manduao", "Panghiawan", "Poblacion", "Santo Niño", "Tangaro"],
+    "Mahinog": ["Benoni", "Binatubo", "Catohugan", "Hubangon", "Owakan", "Poblacion", "Puntod", "San Isidro", "San Jose", "San Miguel", "San Roque", "Tubod", "Tupsan Pequeño"],
+    "Sagay": ["Alangilan", "Bacnit", "Balite", "Bonbon", "Bugang", "Cuna", "Manuyog", "Mayana", "Poblacion"],
+  "Guinsiliban": ["Butay", "Cabuan", "Cantaan", "Liong", "Maac", "North Poblacion", "South Poblacion"]
   },
   "Lanao del Norte": {
-    " Not Applicable":[" Not Appicable"],
-    "Iligan City": [" Not Appicable","Abuno", "Acmac-Mariano Badelles Sr.", "Bagong Silang", "Bonbonon", "Bunawan", "Buru-un", "Dalipuga", "Del Carmen", "Digkilaan", "Ditucalan", "Dulag", "Hinaplanon", "Hindang", "Kabacsanan", "Kalilangan", "Kiwalan", "Lanipao", "Luinab", "Mahayahay", "Mainit", "Mandulog", "Maria Cristina", "Pala-o", "Panoroganan", "Poblacion", "Rogongon", "San Miguel", "San Roque", "Santa Elena", "Santa Filomena", "Santiago", "Santo Rosario", "Saray", "Suarez", "Tambacan", "Tibanga", "Tipanoy", "Tomas L. Cabili (Tominobo Proper)", "Tubod", "Ubaldo Laya", "Upper Hinaplanon", "Upper Tominobo", "Villa Verde"],
-    "Tubod": [" Not Appicable","Barakan", "Baroy", "Bual", "Bulod", "Camp 5", "Candis", "Caniogan", "Dalipe", "Kapatagan", "Kakao", "Kalilangan", "Lala", "Lamawan", "Licapao", "Linas", "Malingao", "Palao", "Patudan", "Pigcarangan", "Pinuyak", "Poblacion", "Pualas", "San Antonio", "Tangcal", "Tangueguiron", "Taporog"],
-    "Bacolod": [" Not Appicable","Alegria", "Bababaya", "Bacolod Poblacion", "Binuni", "Demologan", "Esperanza", "Kahayag", "Liangan East", "Mati", "Minaulon", "Pagayawan", "Punca", "Rupagan", "Samaron", "San Roque", "Sinulong"],
-    "Balo-i": [" Not Appicable","Abaga", "Angrak", "Balut", "Basagad", "Bigue", "Bualan", "Cadaunan", "Liloan", "Lumbac", "Mabas", "Madaya", "Maito Balut", "Mamaanon", "Nangka", "Pacalundo", "Pagalongan", "Pantaon", "Pantar", "Poblacion", "Poona Momungan", "Saray", "Sigayan", "Tangcal", "Zapang"],
-    "Baroy": [" Not Appicable","Andil", "Bagong Dawis", "Baroy Dacu", "Cabadbaran", "Carmel", "Dalama", "Gislib", "Kinasanghan", "Libertad", "Limonsudan", "Maliwanag", "Manan-ao", "Pakyawan", "Poblacion", "Raw-an", "Riverside", "Salong", "San Juan", "Sogod", "Upper Usugan", "Village"],
-    "Kapatagan": [" Not Appicable","Bacus", "Bel-is", "Buenavista", "Butadon", "Catumsan", "Curvada", "De Asis", "Donggwan", "Inudaran", "Kahayag", "Kidaman", "Lapinig", "Mahayahay", "Malinao", "Margos", "Maranding", "Poblacion", "Pulang Yuta", "San Isidro", "San Roque", "Santa Cruz", "Santo Niño", "Sapad", "Susung", "Taguibo", "Tiacongan", "Tulatulahan"],
-    "Kauswagan": [" Not Appicable","Bagong Silang", "Bait-ait", "Bara-ason", "Cayontor", "Delabayan", "Inudaran Poblacion", "Kawit Occidental", "Kawit Oriental", "Libertad", "Paiton", "Poblacion", "Tacub", "Tugar", "Upper Kawit"],
-    "Kolambugan": [" Not Appicable","Austin Heights", "Baybay", "Bubong", "Caromatan", "Inudaran", "Kulasihan", "Libertad", "Lumabao", "Manga", "Matampay", "Mukas", "Muntay", "Pangi", "Pantar", "Poblacion", "Rebucon", "Riverside", "San Jose", "Simbuco", "Tabigue", "Titunod"],
-    "Lala": [" Not Appicable","Abaga", "Andil", "Bariga", "Biangan", "Cabasi", "Culasian", "Darumawang Bucana", "Darumawang Ilaya", "El Salvador", "Gumagamot", "Lala Poblacion", "Lanipao", "Magpatao", "Malingao", "Matampay Bucana", "Matampay Ilaya", "Pacita", "Pendulonan", "Pinatubo", "Raw-an", "Rebe", "San Isidro Lower", "San Isidro Upper", "San Manuel", "Santa Cruz Lower", "Santa Cruz Upper", "Simpak", "Tuna-an"],
-    "Linamon": [" Not Appicable","Busque", "Larapan", "Magoong", "Napocon", "Poblacion", "Purakan", "Robocon", "Samburon"],
-    "Magsaysay": [" Not Appicable","Babag", "Bagong Dawis", "Bieles", "Caniogan", "Dalama", "Kinasanghan", "Lumbac", "Magsaysay Poblacion", "Maliwanag", "Olango", "Pangamutan", "Poblacion", "Ramon Magsaysay", "San Isidro", "Santo Niño", "Sumbac", "Tambo", "Tawinnan", "Tubaran"],
-    "Maigo": [" Not Appicable","Balagatasa", "Camp 1", "Claro M. Recto", "Inacio", "Kulasihan", "Labuay", "Liangan West", "Mahayahay", "Maigo Poblacion", "Manga", "Maliwanag", "Mentring", "Sigacad", "Tugas"],
-    "Matungao": [" Not Appicable","Bangco", "Batal", "Batangan", "Bubong Radapan", "Cadayonan", "Matungao Poblacion", "Pasayanon", "Pangi", "Puntod", "Radapan", "Santa Cruz", "Tagoranao"],
-    "Munai": [" Not Appicable","Bacayawan", "Balabac", "Balintad", "Cadayonan", "Dalama", "Karkum", "Limbubong", "Lininding", "Mabagcon", "Madaya", "Maganding", "Matampay", "Munai Poblacion", "North Cadayonan", "Pantao", "Pantaon", "Pangamutan", "Ramain", "Sandab", "Tamparan", "Taporog"],
-    "Nunungan": [" Not Appicable","Bangco", "Canibungan", "Kabatangan", "Kakapodan", "Katubuan", "Liangan", "Malaig", "Masibay", "Matampay", "Nunungan Poblacion", "Pantao", "Pantaon", "Pelingkingan", "Rebucon", "Songgod", "Taraka"],
-    "Pantao Ragat": [" Not Appicable","Aloon", "Banday", "Bobonga Pantao Ragat", "Bobonga Radapan", "Calawe", "Culapa", "Dimnatang", "Lantawan", "Lomboyan", "Madalum", "Matampay", "Maliwanag", "Pantao Marug", "Pantao Ragat Poblacion", "Poblacion East", "Tangcal"],
-    "Pantar": [" Not Appicable","Bangco", "Bowaya", "Cabasi", "Cadayonan", "Campong", "Dilausan", "Kalilangan", "Lumbacaingud", "Marantao", "Pantao Marug", "Pantar Poblacion", "Pantao Ragat", "Poona Punod", "Punod", "Sapad", "Tawanan"],
-    "Poona Piagapo": [" Not Appicable","Alogan", "Bagumbayan", "Bubong East", "Cadoniog", "Cadayonan", "Dinaig", "Lininding", "Lumbacaingud", "Madamba", "Madaya", "Maliwanag", "Nunungan", "Pantao Ranao", "Pined", "Poona Piagapo Poblacion", "Pendulonan", "Sapad", "Tangcal", "Timbangalan"],
-    "Salvador": [" Not Appicable","Baliw", "Bayanihan", "Bulong", "Calimodan", "Camp 3", "Curvada", "Inasagan", "Kilabos", "Mabatao", "Madaya", "Mindalano", "Pagayawan", "Pansor", "Patidon", "Poblacion", "Saumay", "Sudlon", "Tambac"],
-    "Sapad": [" Not Appicable","Baning", "Dansalan", "Gamal", "Inudaran Lower", "Inudaran Upper", "Karkum", "Mabagcon", "Mala Salug", "Maliwanag", "Pangi", "Poblacion", "Panoloon", "Punta", "Sapad Lower", "Sapad Upper"],
-    "Sultan Naga Dimaporo": [" Not Appicable","Bangco", "Bauyan", "Bualan", "Calibon", "Dablestan", "Ilian", "Kabayaran", "Karomatan", "Koreo", "Lanao", "Mabuhay", "Magpatao", "Mahayahay", "Maliwanag", "Mina", "Natangcopan", "Panggao", "Pikalawag", "Pikit", "Poblacion", "Ramain", "Rebucon", "Sigayan", "Suga-Bayee", "Tagoranao", "Tantaon", "Topocon"],
-    "Tagoloan": [" Not Appicable","Dalamas", "Dimayon", "Inasagan", "Kiazar", "Malimbato", "Maliwanag", "Panalawan", "Poona Piagapo", "Tagoloan Poblacion"],
-    "Tangcal": [" Not Appicable","Bayabao", "Beruar", "Big Banisilon", "Bubong", "Liningding", "Lumbac", "Maliwanag", "Meligo", "Pangi", "Penas", "Poblacion", "Poona Karkum", "Small Banisilon", "Somiorang", "Tangcal Proper"]
+    "Iligan City": ["Abuno", "Acmac-Mariano Badelles Sr.", "Bagong Silang", "Bonbonon", "Bunawan", "Buru-un", "Dalipuga", "Del Carmen", "Digkilaan", "Ditucalan", "Dulag", "Hinaplanon", "Hindang", "Kabacsanan", "Kalilangan", "Kiwalan", "Lanipao", "Luinab", "Mahayahay", "Mainit", "Mandulog", "Maria Cristina", "Pala-o", "Panoroganan", "Poblacion", "Rogongon", "San Miguel", "San Roque", "Santa Elena", "Santa Filomena", "Santiago", "Santo Rosario", "Saray", "Suarez", "Tambacan", "Tibanga", "Tipanoy", "Tomas L. Cabili (Tominobo Proper)", "Tubod", "Ubaldo Laya", "Upper Hinaplanon", "Upper Tominobo", "Villa Verde"],
+    "Tubod": ["Barakan", "Baroy", "Bual", "Bulod", "Camp 5", "Candis", "Caniogan", "Dalipe", "Kapatagan", "Kakao", "Kalilangan", "Lala", "Lamawan", "Licapao", "Linas", "Malingao", "Palao", "Patudan", "Pigcarangan", "Pinuyak", "Poblacion", "Pualas", "San Antonio", "Tangcal", "Tangueguiron", "Taporog"],
+    "Bacolod": ["Alegria", "Bababaya", "Bacolod Poblacion", "Binuni", "Demologan", "Esperanza", "Kahayag", "Liangan East", "Mati", "Minaulon", "Pagayawan", "Punca", "Rupagan", "Samaron", "San Roque", "Sinulong"],
+    "Balo-i": ["Abaga", "Angrak", "Balut", "Basagad", "Bigue", "Bualan", "Cadaunan", "Liloan", "Lumbac", "Mabas", "Madaya", "Maito Balut", "Mamaanon", "Nangka", "Pacalundo", "Pagalongan", "Pantaon", "Pantar", "Poblacion", "Poona Momungan", "Saray", "Sigayan", "Tangcal", "Zapang"],
+    "Baroy": ["Andil", "Bagong Dawis", "Baroy Dacu", "Cabadbaran", "Carmel", "Dalama", "Gislib", "Kinasanghan", "Libertad", "Limonsudan", "Maliwanag", "Manan-ao", "Pakyawan", "Poblacion", "Raw-an", "Riverside", "Salong", "San Juan", "Sogod", "Upper Usugan", "Village"],
+    "Kapatagan": ["Bacus", "Bel-is", "Buenavista", "Butadon", "Catumsan", "Curvada", "De Asis", "Donggwan", "Inudaran", "Kahayag", "Kidaman", "Lapinig", "Mahayahay", "Malinao", "Margos", "Maranding", "Poblacion", "Pulang Yuta", "San Isidro", "San Roque", "Santa Cruz", "Santo Niño", "Sapad", "Susung", "Taguibo", "Tiacongan", "Tulatulahan"],
+    "Kauswagan": ["Bagong Silang", "Bait-ait", "Bara-ason", "Cayontor", "Delabayan", "Inudaran Poblacion", "Kawit Occidental", "Kawit Oriental", "Libertad", "Paiton", "Poblacion", "Tacub", "Tugar", "Upper Kawit"],
+    "Kolambugan": ["Austin Heights", "Baybay", "Bubong", "Caromatan", "Inudaran", "Kulasihan", "Libertad", "Lumabao", "Manga", "Matampay", "Mukas", "Muntay", "Pangi", "Pantar", "Poblacion", "Rebucon", "Riverside", "San Jose", "Simbuco", "Tabigue", "Titunod"],
+    "Lala": ["Abaga", "Andil", "Bariga", "Biangan", "Cabasi", "Culasian", "Darumawang Bucana", "Darumawang Ilaya", "El Salvador", "Gumagamot", "Lala Poblacion", "Lanipao", "Magpatao", "Malingao", "Matampay Bucana", "Matampay Ilaya", "Pacita", "Pendulonan", "Pinatubo", "Raw-an", "Rebe", "San Isidro Lower", "San Isidro Upper", "San Manuel", "Santa Cruz Lower", "Santa Cruz Upper", "Simpak", "Tuna-an"],
+    "Linamon": ["Busque", "Larapan", "Magoong", "Napocon", "Poblacion", "Purakan", "Robocon", "Samburon"],
+    "Magsaysay": ["Babag", "Bagong Dawis", "Bieles", "Caniogan", "Dalama", "Kinasanghan", "Lumbac", "Magsaysay Poblacion", "Maliwanag", "Olango", "Pangamutan", "Poblacion", "Ramon Magsaysay", "San Isidro", "Santo Niño", "Sumbac", "Tambo", "Tawinnan", "Tubaran"],
+    "Maigo": ["Balagatasa", "Camp 1", "Claro M. Recto", "Inacio", "Kulasihan", "Labuay", "Liangan West", "Mahayahay", "Maigo Poblacion", "Manga", "Maliwanag", "Mentring", "Sigacad", "Tugas"],
+    "Matungao": ["Bangco", "Batal", "Batangan", "Bubong Radapan", "Cadayonan", "Matungao Poblacion", "Pasayanon", "Pangi", "Puntod", "Radapan", "Santa Cruz", "Tagoranao"],
+    "Munai": ["Bacayawan", "Balabac", "Balintad", "Cadayonan", "Dalama", "Karkum", "Limbubong", "Lininding", "Mabagcon", "Madaya", "Maganding", "Matampay", "Munai Poblacion", "North Cadayonan", "Pantao", "Pantaon", "Pangamutan", "Ramain", "Sandab", "Tamparan", "Taporog"],
+    "Nunungan": ["Bangco", "Canibungan", "Kabatangan", "Kakapodan", "Katubuan", "Liangan", "Malaig", "Masibay", "Matampay", "Nunungan Poblacion", "Pantao", "Pantaon", "Pelingkingan", "Rebucon", "Songgod", "Taraka"],
+    "Pantao Ragat": ["Aloon", "Banday", "Bobonga Pantao Ragat", "Bobonga Radapan", "Calawe", "Culapa", "Dimnatang", "Lantawan", "Lomboyan", "Madalum", "Matampay", "Maliwanag", "Pantao Marug", "Pantao Ragat Poblacion", "Poblacion East", "Tangcal"],
+    "Pantar": ["Bangco", "Bowaya", "Cabasi", "Cadayonan", "Campong", "Dilausan", "Kalilangan", "Lumbacaingud", "Marantao", "Pantao Marug", "Pantar Poblacion", "Pantao Ragat", "Poona Punod", "Punod", "Sapad", "Tawanan"],
+    "Poona Piagapo": ["Alogan", "Bagumbayan", "Bubong East", "Cadoniog", "Cadayonan", "Dinaig", "Lininding", "Lumbacaingud", "Madamba", "Madaya", "Maliwanag", "Nunungan", "Pantao Ranao", "Pined", "Poona Piagapo Poblacion", "Pendulonan", "Sapad", "Tangcal", "Timbangalan"],
+    "Salvador": ["Baliw", "Bayanihan", "Bulong", "Calimodan", "Camp 3", "Curvada", "Inasagan", "Kilabos", "Mabatao", "Madaya", "Mindalano", "Pagayawan", "Pansor", "Patidon", "Poblacion", "Saumay", "Sudlon", "Tambac"],
+    "Sapad": ["Baning", "Dansalan", "Gamal", "Inudaran Lower", "Inudaran Upper", "Karkum", "Mabagcon", "Mala Salug", "Maliwanag", "Pangi", "Poblacion", "Panoloon", "Punta", "Sapad Lower", "Sapad Upper"],
+    "Sultan Naga Dimaporo": ["Bangco", "Bauyan", "Bualan", "Calibon", "Dablestan", "Ilian", "Kabayaran", "Karomatan", "Koreo", "Lanao", "Mabuhay", "Magpatao", "Mahayahay", "Maliwanag", "Mina", "Natangcopan", "Panggao", "Pikalawag", "Pikit", "Poblacion", "Ramain", "Rebucon", "Sigayan", "Suga-Bayee", "Tagoranao", "Tantaon", "Topocon"],
+    "Tagoloan": ["Dalamas", "Dimayon", "Inasagan", "Kiazar", "Malimbato", "Maliwanag", "Panalawan", "Poona Piagapo", "Tagoloan Poblacion"],
+    "Tangcal": ["Bayabao", "Beruar", "Big Banisilon", "Bubong", "Liningding", "Lumbac", "Maliwanag", "Meligo", "Pangi", "Penas", "Poblacion", "Poona Karkum", "Small Banisilon", "Somiorang", "Tangcal Proper"]
   },
   "Misamis Occidental": {
-    " Not Applicable":[" Not Appicable"],
-    "Oroquieta City": [" Not Appicable", "Apil", "Binuangan", "Bolibol", "Buenavista", "Bunga", "Buntawan", "Burgos", "Canubay", "Clarin Settlement", "Dolipos Alto", "Dolipos Bajo", "Dulapo", "Dullan Norte", "Dullan Sur", "Lower Lamac", "Lower Langcangan", "Lower Loboc", "Lower Rizal", "Layawan", "Malindang", "Mialen", "Mobod", "Ciriaco C. Pastrano", "Paypayan", "Pines", "Poblacion I", "Poblacion II", "Proper Langcangan", "San Vicente Alto", "San Vicente Bajo", "Sebucal", "Senote", "Taboc Norte", "Taboc Sur", "Talairon", "Talic", "Toliyok", "Tipan", "Tuyabang Alto", "Tuyabang Bajo", "Tuyabang Proper", "Upper Lamac", "Upper Langcangan", "Upper Loboc", "Upper Rizal", "Victoria", "Villaflor"],
-    "Ozamiz City": [" Not Appicable", "Aguada", "Bacolod", "Bagakay", "Balintawak", "Bañadero", "Baybay San Roque", "Baybay Santa Cruz", "Baybay Triunfo", "Bongbong", "Calabayan", "Capucao C.", "Capucao P.", "Carangan", "Carmen Annex", "Catadman-Manabay", "Cavinte", "Cogon", "Dalapang", "Diguan", "Dimaluna", "Doña Consuelo", "Embargo", "Gala", "Gango", "Gotokan Daku", "Gotokan Diot", "Guimad", "Guingona", "Kinuman Norte", "Kinuman Sur", "Labinay", "Labo", "Lam-an", "Liposong", "Litapan", "Malaubang", "Manaka", "Maningcol", "Mentering", "Molicay", "Pantaon", "Pulot", "San Antonio", "Sangay Daku", "Sangay Diot", "Sinuza", "Stimson Abordo", "Tabid", "Tinago", "Trigos"],
-    "Tangub City": [" Not Appicable", "Balatacan", "Baluk", "Banglay", "Barangay I", "Barangay II", "Barangay III", "Barangay IV", "Barangay V", "Barangay VI", "Barangay VII", "Bintana", "Bocator", "Bongabong", "Caniangan", "Capalaran", "Catagan", "Garang", "Guinabot", "Guinalaban", "Hoyohoy", "Isidro D. Tan", "Kauswagan", "Kimat", "Labuyo", "Lorenzo Tan", "Lumban", "Maloro", "Manga", "Mantic", "Maquilao", "Marcos", "Matugnao", "Migcanaway", "Minsubong", "Owayan", "Paiton", "Panalsalan", "Pangabuan", "Prenza", "Salimpuno", "San Antonio", "San Apolinario", "San Vicente", "Santa Cruz", "Santa Maria", "Santo Niño", "Sicot", "Silanga", "Silangit", "Simasay", "Sumirap", "Taguite", "Tituron", "Tugas", "Villaba"],
-    "Aloran": [" Not Appicable", "Balintawak", "Banakon", "Bintana", "Caputol", "Casone", "Conat", "Culpan", "Dalisay", "De la Paz", "Deacon Erechar", "Dullan", "Ibabao", "Labo", "Lawa-an", "Lobogon", "Lumbayao", "Makawa", "Manamong", "Matipaz", "Maunong", "Mitazan", "Mahayahay", "Pelong", "Poblacion", "Roxas", "San Juan", "Shina", "Sinampongan", "Taguanao", "Talisayan", "Tuburan", "Zamora"],
-    "Baliangao": [" Not Appicable", "Del Pilar", "Landing", "Lumipon", "Mabini", "Magsaysay", "Misom", "Nato", "Palilan", "Poblacion", "Punta Miray", "San Isidro", "Sinian", "Sulong", "Tugas", "Tunggo"],
-    "Bonifacio": [" Not Appicable", "Bagumbang", "Baybay", "Bolinsong", "Buenavista", "Buracan", "Calolot", "Demetrio Fernan", "Digson", "Dimalco", "Dullan", "Kanaokanao", "Liloan", "Linconan", "Lodiong", "Lower Usugan", "Mapurog", "Migpange", "Montol", "Pisa-an", "Poblacion", "Remedios", "Rufino Lumapas", "Sibuyon", "Tangab", "Tiaman", "Tusik", "Upper Usogan"],
-    "Calamba": [" Not Appicable", "Bonifacio", "Bunawan", "Calaran", "Dapacan Alto", "Dapacan Bajo", "Don Bernardo Nery Poblacion", "Langub", "Libertad", "Magcamiguing", "Mamalad", "Mauswagon", "Northern Poblacion", "Salvador", "San Isidro", "Siloy", "Singalat", "Solinog", "Southwestern Poblacion", "Sulipat"],
-    "Clarin": [" Not Appicable", "Bernad", "Bito-on", "Cabunga-an", "Canibungan Daku", "Canibungan Putol", "Canipacan", "Dalingap", "Dela Paz", "Dolores", "Gata Daku", "Gata Diot", "Guba", "Kinangay Norte", "Kinangay Sur", "Lapasan", "Lupagan", "Malibangcao", "Masabud", "Mialen", "Poblacion I", "Poblacion II", "Poblacion III", "Poblacion IV", "Rizal", "San Pedro", "Sebasi", "Tinacalan", "Tuno"],
-    "Concepcion": [" Not Appicable", "Bagong Clarin", "Capule", "Deboloc", "Diosyo", "Lingatongan", "Litalit", "Maligubaan", "Mantukang", "Maramara", "Mauswagon", "Poblacion", "Pangonayan", "Pogot", "Small Potallon", "Sinuza", "Talaon", "Tumanong"],
-    "Don Victoriano": [" Not Appicable", "Bagong Clarin", "Gandawan", "Lake Duminagat", "Lalud", "Lampasan", "Libuac", "Mansawan", "Napangan", "Nueva Vista", "Petianan", "Tuno"],
-    "Jimenez": [" Not Appicable", "Adia", "Asalan", "Bongabong", "Butuay", "Carmen", "Corrales", "Dicoloc", "Gata", "Guibuangan", "Libaong", "Luzaran", "Mabas", "Macabayao", "Matugas Alto", "Matugas Bajo", "Mialem", "Nacional", "Palilan", "Pangabuan", "Poblacion", "Rizal", "San Roque", "Santa Cruz", "Sibuka", "Tabo-o", "Taraka"],
-    "Lopez Jaena": [" Not Appicable", "Alegria", "Bagong Silang", "Biasong", "Bonifacio", "Burgos", "Dalapang", "Dampalan", "Don Andres Soriano", "Eastern Poblacion", "Galat", "Katipunan", "Kauswagan", "Macalibre Alto", "Macalibre Bajo", "Mahayahay", "Malatubog", "Mansabay Bajo", "Molatuhan Alto", "Molatuhan Bajo", "Munque", "Puntod", "Rizal", "Sibugon", "Sibula", "Silo-on", "Western Poblacion", "Zorilla"],
-    "Panaon": [" Not Appicable", "Baga", "Bangko", "Camanucan", "Lutao", "Magsaysay", "Mapisí", "Poblacion", "Punod", "San Juan", "Sumasap", "Villalin"],
-    "Plaridel": [" Not Appicable", "Agunod", "Bato", "Buenavista", "Calacaan", "Cartagenas", "Casusan", "Catarman", "Cebulin", "Clarin", "Dana-an", "Debusan", "Divisoria", "Eastern Poblacion", "Gusa", "Ilisan", "Kalgasan", "Katipunan", "Kauswagan", "Lao", "Lipolo", "Lugo", "Mamanga Daku", "Mamanga Diot", "Mangidkid", "New Look", "Northern Poblacion", "Panalsalan", "Puntod", "Quirino", "Santa Cruz", "Southern Poblacion", "Spina", "Tipolo", "Western Poblacion"],
-    "Sapang Dalaga": [" Not Appicable", "Bautista", "Bitibut", "Boundary", "Caluya", "Capundag", "Casul", "Dalisay", "Disoy", "El Paraiso", "Guinabot", "Langa-g", "Libertad", "Liloan", "Linas", "Loging", "Maaslob", "Macabibo", "Manla", "Medallo", "Poblacion", "Salimpuno", "San Juan", "Sinaad", "Sipac", "Tiwi", "Ventura", "Vergara", "Villaflor"],
-    "Sinacaban": [" Not Appicable", "Cagayanon", "Camanucan", "Colupan Alto", "Colupan Bajo", "Dinomayan", "Gonzaga", "Katipunan", "Macabayao", "Matunog", "Poblacion", "San Isidro Alto", "San Isidro Bajo", "San Vicente", "Señorita", "Sinonoc", "Tipan"],
-    "Tudela": [" Not Appicable", "Balicaocao", "Basirang", "Bongabong", "Buenavista", "Cabol-anon", "Cahayag", "Camaling", "Canibungan Proper", "Centro Julip", "Centro Napisís", "Centro Poblacion", "Gala", "Ganta", "Locso-on", "Los Angeles", "Maquilao", "Maribojoc", "Mitaza", "Nailon", "Namut", "San Agustin", "San Isidro", "San Juan", "San Nicolas", "San Pedro", "Sebasí", "Sicot", "Silongon", "Sinuza", "Taguima", "Tigdok", "Yahong"]
+    "Oroquieta City": ["Apil", "Binuangan", "Bolibol", "Buenavista", "Bunga", "Buntawan", "Burgos", "Canubay", "Clarin Settlement", "Dolipos Alto", "Dolipos Bajo", "Dulapo", "Dullan Norte", "Dullan Sur", "Lower Lamac", "Lower Langcangan", "Lower Loboc", "Lower Rizal", "Layawan", "Malindang", "Mialen", "Mobod", "Ciriaco C. Pastrano", "Paypayan", "Pines", "Poblacion I", "Poblacion II", "Proper Langcangan", "San Vicente Alto", "San Vicente Bajo", "Sebucal", "Senote", "Taboc Norte", "Taboc Sur", "Talairon", "Talic", "Toliyok", "Tipan", "Tuyabang Alto", "Tuyabang Bajo", "Tuyabang Proper", "Upper Lamac", "Upper Langcangan", "Upper Loboc", "Upper Rizal", "Victoria", "Villaflor"],
+    "Ozamiz City": ["Aguada", "Bacolod", "Bagakay", "Balintawak", "Bañadero", "Baybay San Roque", "Baybay Santa Cruz", "Baybay Triunfo", "Bongbong", "Calabayan", "Capucao C.", "Capucao P.", "Carangan", "Carmen Annex", "Catadman-Manabay", "Cavinte", "Cogon", "Dalapang", "Diguan", "Dimaluna", "Doña Consuelo", "Embargo", "Gala", "Gango", "Gotokan Daku", "Gotokan Diot", "Guimad", "Guingona", "Kinuman Norte", "Kinuman Sur", "Labinay", "Labo", "Lam-an", "Liposong", "Litapan", "Malaubang", "Manaka", "Maningcol", "Mentering", "Molicay", "Pantaon", "Pulot", "San Antonio", "Sangay Daku", "Sangay Diot", "Sinuza", "Stimson Abordo", "Tabid", "Tinago", "Trigos"],
+    "Tangub City": ["Balatacan", "Baluk", "Banglay", "Barangay I", "Barangay II", "Barangay III", "Barangay IV", "Barangay V", "Barangay VI", "Barangay VII", "Bintana", "Bocator", "Bongabong", "Caniangan", "Capalaran", "Catagan", "Garang", "Guinabot", "Guinalaban", "Hoyohoy", "Isidro D. Tan", "Kauswagan", "Kimat", "Labuyo", "Lorenzo Tan", "Lumban", "Maloro", "Manga", "Mantic", "Maquilao", "Marcos", "Matugnao", "Migcanaway", "Minsubong", "Owayan", "Paiton", "Panalsalan", "Pangabuan", "Prenza", "Salimpuno", "San Antonio", "San Apolinario", "San Vicente", "Santa Cruz", "Santa Maria", "Santo Niño", "Sicot", "Silanga", "Silangit", "Simasay", "Sumirap", "Taguite", "Tituron", "Tugas", "Villaba"],
+    "Aloran": ["Balintawak", "Banakon", "Bintana", "Caputol", "Casone", "Conat", "Culpan", "Dalisay", "De la Paz", "Deacon Erechar", "Dullan", "Ibabao", "Labo", "Lawa-an", "Lobogon", "Lumbayao", "Makawa", "Manamong", "Matipaz", "Maunong", "Mitazan", "Mahayahay", "Pelong", "Poblacion", "Roxas", "San Juan", "Shina", "Sinampongan", "Taguanao", "Talisayan", "Tuburan", "Zamora"],
+    "Baliangao": ["Del Pilar", "Landing", "Lumipon", "Mabini", "Magsaysay", "Misom", "Nato", "Palilan", "Poblacion", "Punta Miray", "San Isidro", "Sinian", "Sulong", "Tugas", "Tunggo"],
+    "Bonifacio": ["Bagumbang", "Baybay", "Bolinsong", "Buenavista", "Buracan", "Calolot", "Demetrio Fernan", "Digson", "Dimalco", "Dullan", "Kanaokanao", "Liloan", "Linconan", "Lodiong", "Lower Usugan", "Mapurog", "Migpange", "Montol", "Pisa-an", "Poblacion", "Remedios", "Rufino Lumapas", "Sibuyon", "Tangab", "Tiaman", "Tusik", "Upper Usogan"],
+    "Calamba": ["Bonifacio", "Bunawan", "Calaran", "Dapacan Alto", "Dapacan Bajo", "Don Bernardo Nery Poblacion", "Langub", "Libertad", "Magcamiguing", "Mamalad", "Mauswagon", "Northern Poblacion", "Salvador", "San Isidro", "Siloy", "Singalat", "Solinog", "Southwestern Poblacion", "Sulipat"],
+    "Clarin": ["Bernad", "Bito-on", "Cabunga-an", "Canibungan Daku", "Canibungan Putol", "Canipacan", "Dalingap", "Dela Paz", "Dolores", "Gata Daku", "Gata Diot", "Guba", "Kinangay Norte", "Kinangay Sur", "Lapasan", "Lupagan", "Malibangcao", "Masabud", "Mialen", "Poblacion I", "Poblacion II", "Poblacion III", "Poblacion IV", "Rizal", "San Pedro", "Sebasi", "Tinacalan", "Tuno"],
+    "Concepcion": ["Bagong Clarin", "Capule", "Deboloc", "Diosyo", "Lingatongan", "Litalit", "Maligubaan", "Mantukang", "Maramara", "Mauswagon", "Poblacion", "Pangonayan", "Pogot", "Small Potallon", "Sinuza", "Talaon", "Tumanong"],
+    "Don Victoriano": ["Bagong Clarin", "Gandawan", "Lake Duminagat", "Lalud", "Lampasan", "Libuac", "Mansawan", "Napangan", "Nueva Vista", "Petianan", "Tuno"],
+    "Jimenez": ["Adia", "Asalan", "Bongabong", "Butuay", "Carmen", "Corrales", "Dicoloc", "Gata", "Guibuangan", "Libaong", "Luzaran", "Mabas", "Macabayao", "Matugas Alto", "Matugas Bajo", "Mialem", "Nacional", "Palilan", "Pangabuan", "Poblacion", "Rizal", "San Roque", "Santa Cruz", "Sibuka", "Tabo-o", "Taraka"],
+    "Lopez Jaena": ["Alegria", "Bagong Silang", "Biasong", "Bonifacio", "Burgos", "Dalapang", "Dampalan", "Don Andres Soriano", "Eastern Poblacion", "Galat", "Katipunan", "Kauswagan", "Macalibre Alto", "Macalibre Bajo", "Mahayahay", "Malatubog", "Mansabay Bajo", "Molatuhan Alto", "Molatuhan Bajo", "Munque", "Puntod", "Rizal", "Sibugon", "Sibula", "Silo-on", "Western Poblacion", "Zorilla"],
+    "Panaon": ["Baga", "Bangko", "Camanucan", "Lutao", "Magsaysay", "Mapisí", "Poblacion", "Punod", "San Juan", "Sumasap", "Villalin"],
+    "Plaridel": ["Agunod", "Bato", "Buenavista", "Calacaan", "Cartagenas", "Casusan", "Catarman", "Cebulin", "Clarin", "Dana-an", "Debusan", "Divisoria", "Eastern Poblacion", "Gusa", "Ilisan", "Kalgasan", "Katipunan", "Kauswagan", "Lao", "Lipolo", "Lugo", "Mamanga Daku", "Mamanga Diot", "Mangidkid", "New Look", "Northern Poblacion", "Panalsalan", "Puntod", "Quirino", "Santa Cruz", "Southern Poblacion", "Spina", "Tipolo", "Western Poblacion"],
+    "Sapang Dalaga": ["Bautista", "Bitibut", "Boundary", "Caluya", "Capundag", "Casul", "Dalisay", "Disoy", "El Paraiso", "Guinabot", "Langa-g", "Libertad", "Liloan", "Linas", "Loging", "Maaslob", "Macabibo", "Manla", "Medallo", "Poblacion", "Salimpuno", "San Juan", "Sinaad", "Sipac", "Tiwi", "Ventura", "Vergara", "Villaflor"],
+    "Sinacaban": ["Cagayanon", "Camanucan", "Colupan Alto", "Colupan Bajo", "Dinomayan", "Gonzaga", "Katipunan", "Macabayao", "Matunog", "Poblacion", "San Isidro Alto", "San Isidro Bajo", "San Vicente", "Señorita", "Sinonoc", "Tipan"],
+    "Tudela": ["Balicaocao", "Basirang", "Bongabong", "Buenavista", "Cabol-anon", "Cahayag", "Camaling", "Canibungan Proper", "Centro Julip", "Centro Napisís", "Centro Poblacion", "Gala", "Ganta", "Locso-on", "Los Angeles", "Maquilao", "Maribojoc", "Mitaza", "Nailon", "Namut", "San Agustin", "San Isidro", "San Juan", "San Nicolas", "San Pedro", "Sebasí", "Sicot", "Silongon", "Sinuza", "Taguima", "Tigdok", "Yahong"]
   },
   "Misamis Oriental": {
-    " Not Applicable":[" Not Appicable"],
-    "Cagayan de Oro City": [" Not Applicable","Agusan","Balubal","Balulang","Baikingon","Bayabas","Bayanga","Besigan","Bonbon","Bugo","Bulua","Camaman-an","Carmen","Consolacion","Cugman","Dansolihon","F.S. Catanico","Gusa","Indahag","Iponan","Kauswagan","Lapasan","Lumbia","Macabalan","Macasandig","Mambuaya","Pagalungan","Pagatpatan","Patas","Pigsag-an","Puerto","Puntod","San Simon","Tablon","Taglimao","Tagpangi","Tignapoloan","Tuburan","Tumpagon","Urduja","Wao","Barangay 1","Barangay 2","Barangay 3","Barangay 4","Barangay 5","Barangay 6","Barangay 7","Barangay 8","Barangay 9","Barangay 10","Barangay 11","Barangay 12","Barangay 13","Barangay 14","Barangay 15","Barangay 16","Barangay 17","Barangay 18","Barangay 19","Barangay 20","Barangay 21","Barangay 22","Barangay 23","Barangay 24","Barangay 25","Barangay 26","Barangay 27","Barangay 28","Barangay 29","Barangay 30","Barangay 31","Barangay 32","Barangay 33","Barangay 34","Barangay 35","Barangay 36","Barangay 37","Barangay 38","Barangay 39","Barangay 40"],
-    "Gingoog City": [" Not Applicable","Agay-ayan", "Alagatan", "Anakan", "Bagubad", "Bakidbakid", "Bal-ason", "Bantaawan", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Barangay 6", "Barangay 7", "Barangay 8", "Barangay 9", "Barangay 10", "Barangay 11", "Barangay 12", "Barangay 13", "Barangay 14", "Barangay 15", "Barangay 16", "Barangay 17", "Barangay 18", "Barangay 18-A", "Barangay 19", "Barangay 20", "Barangay 21", "Barangay 22", "Barangay 22-A", "Barangay 23", "Barangay 24", "Barangay 24-A", "Barangay 25", "Binakalan", "Blas", "Buenavista", "Calipay", "Camaman-an", "Capitulangan", "Daan-Lungsod", "Don E. de la Paz", "Erechar", "Felicidad", "Gumaod", "Hindangon", "Kalagonoy", "Kibisi", "Kibanban", "Kitonod", "Kiwalan", "Libertad", "Libon", "Lunca", "Lurugan", "Magsaysay", "Malibud", "Malinao", "Maribucao", "Mimbuntong", "Mimbaloto", "Odiongan", "Pangás", "Punong", "Ricordon", "Samay", "San Jose", "San Juan", "San Miguel", "Sangalan", "Santiago", "Siaris", "Sinao", "Tinulongan", "Tonga", "Tinaytayan", "Talisay", "Utlanan"],
-    "El Salvador City": [" Not Applicable","Amoros","Bolisong","Bolobolo","Calongonan","Cogon","Himaya","Hinigdaan","Kalabaylabay", "Kibonbon","Molugan","Poblacion","Sambulawan","Sinaloc","Taytay","Ulaliman"],
-    "Alubijid": [" Not Applicable","Baybay", "Benigwayan", "Calatcat", "Casinglot", "Lanao", "Loguilo", "Lourdes", "Lumbo", "Molocboloc", "Poblacion", "Sampatulog", "Sungay", "Taboc", "Tapadarak", "Tula", "Tugas"],
-    "Balingasag": [" Not Applicable","Balagnan", "Balingasag", "Biwangan", "Blanco", "Calawag", "Camuayan", "Cogon", "Dansuli", "Duka", "Hermano", "Kibanban", "Linabu", "Linggangao", "Mambayaan", "Mandangoa", "Napaliran", "Plaridel", "Poblacion", "Quezon", "Rosario", "Samay", "San Francisco", "San Isidro", "San Juan", "Talusan", "Waterfall", "Talacogon", "Sulu", "Misamis"],
-    "Balingoan": [" Not Applicable","Baukbauk", "Dahilig", "Kabangasan", "Kabulakan", "Kauswagan", "Lapinig", "Mantangale", "Mapua", "San Alonzo"],
-    "Binuangan": [" Not Applicable","Dampias", "Kitamban", "Kitambis", "Mabini", "Mosangot", "Nabataan", "Poblacion", "Valdeconcha"],
-    "Claveria": [" Not Applicable","Ani-e", "Aposkahoy", "Bulahan", "Cabacungan", "Gumaod", "Hinaplanan", "Kalawitan", "Lanise", "Luna", "Madaguing", "Malagana", "Mat-i", "Minalwang", "Pambugas", "Panampawan", "Patrocenio", "Pelaez", "Plaridel", "Poblacion", "Punong", "Rizal", "Santa Cruz", "Tamboboan", "Tipolohon"],
-    "Gitagum": [" Not Applicable","Burnay", "Carlos P. Garcia", "Cogon", "Gregorio Pelaez", "Kilogmag", "Matangad", "Pangayawan", "Poblacion", "Quezon", "Tala-o", "Pangaba"],
-    "Initao": [" Not Applicable","Aluna", "Andales", "Apas", "Calacapan", "Gimangpang", "Kamelon", "Kanitoan", "Kauswagan", "Laguimban", "Liloan", "Pagahan", "Poblacion", "Pontacon", "San Pedro", "Sinalac", "Tawantawan"],
-    "Jasaan": [" Not Applicable","Aplaya", "Bobontugan", "Corrales", "Danao", "East Poblacion", "Jasaan Nuevo", "Kimaya", "La Libertad", "Luz Banzon", "Moog", "Natubo", "San Antonio", "San Isidro", "San Nicolas", "Solana", "Upper Jasaan", "West Poblacion"],
-    "Kinoguitan": [" Not Applicable","Buko", "Calubo", "Campo", "Esperanza", "Panabol", "Poblacion", "Salicapawan", "Saloso", "Suarez", "Sumalag", "Talisayan", "Zubiri"],
-    "Lagonglong": [" Not Applicable","Banglay", "Dampil", "Kabulawan", "Manaol", "Poblacion", "Tabok", "Umagood", "Gaston", "Salubsob", "Kauswagan"],
-    "Laguindingan": [" Not Applicable","Aroma", "Gasi", "Kibaghot", "Lapad", "Liberty", "Mauswagon", "Moog", "Poblacion", "Sambawan", "Sinait", "Tubajon"],
-    "Libertad": [" Not Applicable","Gimaylan", "Kimalok", "Lubluban", "Poblacion", "Retablo", "San Roque", "Tangkang", "Taytayan", "Dulapo"],
-    "Lugait": [" Not Applicable","Aya-aya", "Betahon", "Biga", "Calangahan", "Kalabaylabay", "Poblacion", "Lower Logistics", "Upper Logistics"],
-    "Magsaysay": [" Not Applicable","Abunda", "Artadi", "Bonifacio Aquiño", "Cabalawan", "Cabantian", "Cabubuhan", "Candiis", "Consuelo", "Damayuhan", "Gumabon", "Katipunan", "Kauswagan", "Kibungsod", "Mahayahay", "Mindulao", "Pag-asa", "Poblacion", "San Isidro", "San Vicente", "Santa Cruz", "Tama", "Tibon-tibon", "Tinaan", "Tulang", "Villa Felipa"],
-    "Manticao": [" Not Applicable","Argayoso", "Balacanas", "Cabanyungan", "Camanga", "Digkilaan", "Mahayahay", "Mambaya", "Paddogan", "Poblacion", "Punta Silum", "Tuod", "Upper Malubog"],
-    "Medina": [" Not Applicable","Bangbang", "Biga", "Bulwa", "Cabug", "Diguan", "Don Victoriano", "Gov. Jandusay", "Mananum Baguio", "Mananum Daan", "Mauswagon", "Mina-on", "Poblacion", "San Isidro", "San Jose", "San Roque", "San Vicente", "Tup-on", "Ulab"],
-    "Naawan": [" Not Applicable","Don Andres Narra", "Linangkayan", "Lubilan", "Maputi", "Matangad", "Patag", "Poblacion", "San Isidro", "Tagbalogo", "Tuboran"],
-    "Opol": [" Not Applicable","Awang", "Barra", "Bonbon", "Cauyunan", "Igpit", "Limonda", "Luyong Bonbon", "Malugan", "Nangcaon", "Patag", "Poblacion", "Taboc", "Tingalan", "Tuod"],
-    "Salay": [" Not Applicable","Alipuaton", "Ampenican", "Bunal", "Casulog", "Dinagsaan", "Guinalaban", "Ili-ilihon", "Inobulan", "Looc", "Matangad", "Poblacion", "Salay River I", "Salay River II", "Saray", "Tingkarol"],
-    "Sugbongcogon": [" Not Applicable","Alicomohan", "Amphi", "Kaulayanan", "Kidampas", "Manga", "Mimarlo", "Poblacion", "Poo", "Silad", "Tuod"],
-    "Tagoloan": [" Not Applicable","Baluarte", "Casinglot", "Gracia", "Mohon", "Natumolan", "Poblacion", "Rosario", "Santa Ana", "Santa Cruz", "Sugbongcogon"],
-    "Talisayan": [" Not Applicable","Babano", "Bugdang", "Calamcam", "Casaniangan", "Mandahilag", "Pangdan", "Poblacion", "Pook", "Punta Santiago", "Putallo", "San Jose", "Santa Ines", "Sibantang", "Sindangan", "Sipaco"],
-    "Villanueva": [" Not Applicable","Balacanas", "Dayawan", "Katipunan", "Kimaya", "Looc", "Poblacion", "San Martin", "Tambobong", "Tambongon"]
+    "Cagayan de Oro City": ["Agusan","Balubal","Balulang","Baikingon","Bayabas","Bayanga","Besigan","Bonbon","Bugo","Bulua","Camaman-an","Carmen","Consolacion","Cugman","Dansolihon","F.S. Catanico","Gusa","Indahag","Iponan","Kauswagan","Lapasan","Lumbia","Macabalan","Macasandig","Mambuaya","Pagalungan","Pagatpatan","Patas","Pigsag-an","Puerto","Puntod","San Simon","Tablon","Taglimao","Tagpangi","Tignapoloan","Tuburan","Tumpagon","Urduja","Wao","Barangay 1","Barangay 2","Barangay 3","Barangay 4","Barangay 5","Barangay 6","Barangay 7","Barangay 8","Barangay 9","Barangay 10","Barangay 11","Barangay 12","Barangay 13","Barangay 14","Barangay 15","Barangay 16","Barangay 17","Barangay 18","Barangay 19","Barangay 20","Barangay 21","Barangay 22","Barangay 23","Barangay 24","Barangay 25","Barangay 26","Barangay 27","Barangay 28","Barangay 29","Barangay 30","Barangay 31","Barangay 32","Barangay 33","Barangay 34","Barangay 35","Barangay 36","Barangay 37","Barangay 38","Barangay 39","Barangay 40"],
+    "Gingoog City": ["Agay-ayan", "Alagatan", "Anakan", "Bagubad", "Bakidbakid", "Bal-ason", "Bantaawan", "Barangay 1", "Barangay 2", "Barangay 3", "Barangay 4", "Barangay 5", "Barangay 6", "Barangay 7", "Barangay 8", "Barangay 9", "Barangay 10", "Barangay 11", "Barangay 12", "Barangay 13", "Barangay 14", "Barangay 15", "Barangay 16", "Barangay 17", "Barangay 18", "Barangay 18-A", "Barangay 19", "Barangay 20", "Barangay 21", "Barangay 22", "Barangay 22-A", "Barangay 23", "Barangay 24", "Barangay 24-A", "Barangay 25", "Binakalan", "Blas", "Buenavista", "Calipay", "Camaman-an", "Capitulangan", "Daan-Lungsod", "Don E. de la Paz", "Erechar", "Felicidad", "Gumaod", "Hindangon", "Kalagonoy", "Kibisi", "Kibanban", "Kitonod", "Kiwalan", "Libertad", "Libon", "Lunca", "Lurugan", "Magsaysay", "Malibud", "Malinao", "Maribucao", "Mimbuntong", "Mimbaloto", "Odiongan", "Pangás", "Punong", "Ricordon", "Samay", "San Jose", "San Juan", "San Miguel", "Sangalan", "Santiago", "Siaris", "Sinao", "Tinulongan", "Tonga", "Tinaytayan", "Talisay", "Utlanan"],
+    "El Salvador City": ["Amoros","Bolisong","Bolobolo","Calongonan","Cogon","Himaya","Hinigdaan","Kalabaylabay", "Kibonbon","Molugan","Poblacion","Sambulawan","Sinaloc","Taytay","Ulaliman"],
+    "Alubijid": ["Baybay", "Benigwayan", "Calatcat", "Casinglot", "Lanao", "Loguilo", "Lourdes", "Lumbo", "Molocboloc", "Poblacion", "Sampatulog", "Sungay", "Taboc", "Tapadarak", "Tula", "Tugas"],
+    "Balingasag": ["Balagnan", "Balingasag", "Biwangan", "Blanco", "Calawag", "Camuayan", "Cogon", "Dansuli", "Duka", "Hermano", "Kibanban", "Linabu", "Linggangao", "Mambayaan", "Mandangoa", "Napaliran", "Plaridel", "Poblacion", "Quezon", "Rosario", "Samay", "San Francisco", "San Isidro", "San Juan", "Talusan", "Waterfall", "Talacogon", "Sulu", "Misamis"],
+    "Balingoan": ["Baukbauk", "Dahilig", "Kabangasan", "Kabulakan", "Kauswagan", "Lapinig", "Mantangale", "Mapua", "San Alonzo"],
+    "Binuangan": ["Dampias", "Kitamban", "Kitambis", "Mabini", "Mosangot", "Nabataan", "Poblacion", "Valdeconcha"],
+    "Claveria": ["Ani-e", "Aposkahoy", "Bulahan", "Cabacungan", "Gumaod", "Hinaplanan", "Kalawitan", "Lanise", "Luna", "Madaguing", "Malagana", "Mat-i", "Minalwang", "Pambugas", "Panampawan", "Patrocenio", "Pelaez", "Plaridel", "Poblacion", "Punong", "Rizal", "Santa Cruz", "Tamboboan", "Tipolohon"],
+    "Gitagum": ["Burnay", "Carlos P. Garcia", "Cogon", "Gregorio Pelaez", "Kilogmag", "Matangad", "Pangayawan", "Poblacion", "Quezon", "Tala-o", "Pangaba"],
+    "Initao": ["Aluna", "Andales", "Apas", "Calacapan", "Gimangpang", "Kamelon", "Kanitoan", "Kauswagan", "Laguimban", "Liloan", "Pagahan", "Poblacion", "Pontacon", "San Pedro", "Sinalac", "Tawantawan"],
+    "Jasaan": ["Aplaya", "Bobontugan", "Corrales", "Danao", "East Poblacion", "Jasaan Nuevo", "Kimaya", "La Libertad", "Luz Banzon", "Moog", "Natubo", "San Antonio", "San Isidro", "San Nicolas", "Solana", "Upper Jasaan", "West Poblacion"],
+    "Kinoguitan": ["Buko", "Calubo", "Campo", "Esperanza", "Panabol", "Poblacion", "Salicapawan", "Saloso", "Suarez", "Sumalag", "Talisayan", "Zubiri"],
+    "Lagonglong": ["Banglay", "Dampil", "Kabulawan", "Manaol", "Poblacion", "Tabok", "Umagood", "Gaston", "Salubsob", "Kauswagan"],
+    "Laguindingan": ["Aroma", "Gasi", "Kibaghot", "Lapad", "Liberty", "Mauswagon", "Moog", "Poblacion", "Sambawan", "Sinait", "Tubajon"],
+    "Libertad": ["Gimaylan", "Kimalok", "Lubluban", "Poblacion", "Retablo", "San Roque", "Tangkang", "Taytayan", "Dulapo"],
+    "Lugait": ["Aya-aya", "Betahon", "Biga", "Calangahan", "Kalabaylabay", "Poblacion", "Lower Logistics", "Upper Logistics"],
+    "Magsaysay": ["Abunda", "Artadi", "Bonifacio Aquiño", "Cabalawan", "Cabantian", "Cabubuhan", "Candiis", "Consuelo", "Damayuhan", "Gumabon", "Katipunan", "Kauswagan", "Kibungsod", "Mahayahay", "Mindulao", "Pag-asa", "Poblacion", "San Isidro", "San Vicente", "Santa Cruz", "Tama", "Tibon-tibon", "Tinaan", "Tulang", "Villa Felipa"],
+    "Manticao": ["Argayoso", "Balacanas", "Cabanyungan", "Camanga", "Digkilaan", "Mahayahay", "Mambaya", "Paddogan", "Poblacion", "Punta Silum", "Tuod", "Upper Malubog"],
+    "Medina": ["Bangbang", "Biga", "Bulwa", "Cabug", "Diguan", "Don Victoriano", "Gov. Jandusay", "Mananum Baguio", "Mananum Daan", "Mauswagon", "Mina-on", "Poblacion", "San Isidro", "San Jose", "San Roque", "San Vicente", "Tup-on", "Ulab"],
+    "Naawan": ["Don Andres Narra", "Linangkayan", "Lubilan", "Maputi", "Matangad", "Patag", "Poblacion", "San Isidro", "Tagbalogo", "Tuboran"],
+    "Opol": ["Awang", "Barra", "Bonbon", "Cauyunan", "Igpit", "Limonda", "Luyong Bonbon", "Malugan", "Nangcaon", "Patag", "Poblacion", "Taboc", "Tingalan", "Tuod"],
+    "Salay": ["Alipuaton", "Ampenican", "Bunal", "Casulog", "Dinagsaan", "Guinalaban", "Ili-ilihon", "Inobulan", "Looc", "Matangad", "Poblacion", "Salay River I", "Salay River II", "Saray", "Tingkarol"],
+    "Sugbongcogon": ["Alicomohan", "Amphi", "Kaulayanan", "Kidampas", "Manga", "Mimarlo", "Poblacion", "Poo", "Silad", "Tuod"],
+    "Tagoloan": ["Baluarte", "Casinglot", "Gracia", "Mohon", "Natumolan", "Poblacion", "Rosario", "Santa Ana", "Santa Cruz", "Sugbongcogon"],
+    "Talisayan": ["Babano", "Bugdang", "Calamcam", "Casaniangan", "Mandahilag", "Pangdan", "Poblacion", "Pook", "Punta Santiago", "Putallo", "San Jose", "Santa Ines", "Sibantang", "Sindangan", "Sipaco"],
+    "Villanueva": ["Balacanas", "Dayawan", "Katipunan", "Kimaya", "Looc", "Poblacion", "San Martin", "Tambobong", "Tambongon"]
   }
 };
 
@@ -727,7 +719,6 @@ provSel.addEventListener('change', () => {
   citySel.disabled = true; brgySel.disabled = true;
   if (LGU_DATA[provSel.value]) {
     Object.keys(LGU_DATA[provSel.value]).sort().forEach(c => {
-      if (c.trim() === 'Not Applicable') return; // skip placeholder key
       const o = document.createElement('option'); o.value = c; o.textContent = c;
       citySel.appendChild(o);
     });
@@ -742,7 +733,6 @@ citySel.addEventListener('change', () => {
   const cities = LGU_DATA[provSel.value];
   if (citySel.value && cities && cities[citySel.value]) {
     cities[citySel.value].slice().sort().forEach(b => {
-      if (b.trim().toLowerCase().startsWith('not app')) return; // skip placeholder
       const o = document.createElement('option'); o.value = b; o.textContent = b;
       brgySel.appendChild(o);
     });
@@ -801,11 +791,11 @@ function onRegTypeChange() {
   if (!selected) return;
 
   if (selected.value === 'Pre-registered') {
-    invoiceField.style.display = 'block';
+    invoiceField.classList.remove('hidden');
     onsiteNotice.classList.remove('show');
     invoiceInput.required = true;
   } else {
-    invoiceField.style.display = 'none';
+    invoiceField.classList.add('hidden');
     onsiteNotice.classList.add('show');
     invoiceInput.value    = '';
     invoiceInput.required = false;
