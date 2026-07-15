@@ -164,10 +164,20 @@
       
         
         <div class="section-label">Participant information</div>
-        <div class="field" id="f-name">
-          <label for="fullName">Full name <span class="req">*</span></label>
-          <input type="text" id="fullName" placeholder="e.g. Juan dela Cruz" autocomplete="name">
-          <div class="error-msg"><i class="ti ti-alert-circle"></i> Please enter your full name.</div>
+        <div class="field" id="f-lastname">
+          <label for="lastName">Last name <span class="req">*</span></label>
+          <input type="text" id="lastName" placeholder="e.g. dela Cruz" autocomplete="family-name">
+          <div class="error-msg"><i class="ti ti-alert-circle"></i> Please enter your last name.</div>
+        </div>
+        <div class="field" id="f-firstname">
+          <label for="firstName">First name <span class="req">*</span></label>
+          <input type="text" id="firstName" placeholder="e.g. Juan" autocomplete="given-name">
+          <div class="error-msg"><i class="ti ti-alert-circle"></i> Please enter your first name.</div>
+        </div>
+        <div class="field" id="f-middlename">
+          <label for="middleName">Middle name</label>
+          <input type="text" id="middleName" placeholder="Optional" autocomplete="additional-name">
+          <div class="error-msg"><i class="ti ti-alert-circle"></i> Please enter your middle name.</div>
         </div>
         <div class="field" id="f-desig">
           <label for="designation">Designation <span class="req">*</span></label>
@@ -498,7 +508,7 @@ citySel.addEventListener('change', () => {
   clearErr('f-citymun');
 });
 
-['barangay','fullName','designation','invoiceNum','agencyName'].forEach(id => getById(id).addEventListener('input', () => clearErr('f-' + (id==='fullName'?'name':id==='invoiceNum'?'invoice':id==='designation'?'desig':id==='agencyName'?'agency':id))));
+['barangay','lastName','firstName','middleName','designation','invoiceNum','agencyName'].forEach(id => getById(id).addEventListener('input', () => clearErr('f-' + (id==='invoiceNum'?'invoice':id==='designation'?'desig':id==='agencyName'?'agency':id))));
 
 function onLguLevelChange() {
   const lvl = document.querySelector('input[name="lguLevel"]:checked'); if(!lvl) return;
@@ -527,7 +537,7 @@ async function handleSubmit() {
   let ok = true;
   const v = (id, fId) => { if (!getById(id).value.trim()) { getById(fId).classList.add('has-error'); ok = false; } else clearErr(fId); };
   
-  v('fullName', 'f-name'); v('designation', 'f-desig');
+  v('lastName', 'f-lastname'); v('firstName', 'f-firstname'); v('designation', 'f-desig');
   
   const lvl = document.querySelector('input[name="lguLevel"]:checked');
   if(!lvl) { getById('f-lgulevel').classList.add('has-error'); ok = false; }
@@ -556,8 +566,12 @@ async function handleSubmit() {
   const btn = getById('submitBtn'); btn.disabled = true; getById('btnIcon').className = 'ti ti-loader'; getById('btnText').textContent = ' Submitting...';
   
   const isOthers = lvl.value === 'Others';
+  const lastName = getById('lastName').value.trim();
+  const firstName = getById('firstName').value.trim();
+  const middleName = getById('middleName').value.trim();
+  const fullName = middleName ? `${lastName}, ${firstName} ${middleName}` : `${lastName}, ${firstName}`;
   const payload = {
-    name: getById('fullName').value.trim(), designation: getById('designation').value.trim(),
+    name: fullName, designation: getById('designation').value.trim(),
     lguLevel: lvl.value,
     province: !isOthers ? provSel.value : '—',
     city: (!isOthers && lvl.value !== 'Provincial') ? citySel.value : '—',
